@@ -1,5 +1,5 @@
 [programs.localnet]
-example2 = "6zHwdgEhvbYQ7H3Rf3kc3pQSsQcctv89QnoNYQpquVHM"
+choose_option = "6zHwdgEhvbYQ7H3Rf3kc3pQSsQcctv89QnoNYQpquVHM"
 
 [registry]
 url = "https://anchor.projectserum.com"

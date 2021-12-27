@@ -2,11 +2,12 @@ const assert = require("assert");
 const anchor = require("@project-serum/anchor");
 const { SystemProgram } = anchor.web3;
 
-describe("Example2", () => {
+describe("ChooseOption", () => {
+  let _baseAccount;
   const provider = anchor.Provider.env();
   anchor.setProvider(provider);
   it("It initializes the account", async () => {
-    const program = anchor.workspace.Example2;
+    const program = anchor.workspace.ChooseOption;
     const baseAccount = anchor.web3.Keypair.generate();
     await program.rpc.initialize("Hello World", {
       accounts: {
@@ -26,7 +27,7 @@ describe("Example2", () => {
 
   it("Updates a previously created account", async () => {
     const baseAccount = _baseAccount;
-    const program = anchor.workspace.Example2;
+    const program = anchor.workspace.ChooseOption;
 
     await program.rpc.update("Some new data", {
       accounts: {
