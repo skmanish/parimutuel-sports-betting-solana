@@ -6,43 +6,6 @@ describe("ChooseOption", () => {
   let _baseAccount;
   const provider = anchor.Provider.env();
   anchor.setProvider(provider);
-  it("It initializes the account", async () => {
-    const program = anchor.workspace.ChooseOption;
-    const baseAccount = anchor.web3.Keypair.generate();
-    await program.rpc.initialize("Hello World", {
-      accounts: {
-        baseAccount: baseAccount.publicKey,
-        user: provider.wallet.publicKey,
-        systemProgram: SystemProgram.programId,
-      },
-      signers: [baseAccount],
-    });
-
-    const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-    console.log('Data: ', account.data);
-    assert.ok(account.data === "Hello World");
-    _baseAccount = baseAccount;
-
-  });
-
-  it("Updates a previously created account", async () => {
-    const baseAccount = _baseAccount;
-    const program = anchor.workspace.ChooseOption;
-
-    await program.rpc.update("Some new data", {
-      accounts: {
-        baseAccount: baseAccount.publicKey,
-      },
-    });
-  
-    const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
-    console.log('Updated data: ', account.data)
-    assert.ok(account.data === "Some new data");
-    console.log('all account data:', account)
-    console.log('All data: ', account.dataList);
-    assert.ok(account.dataList.length === 2);
-  });
-
   // EventAccount Instructions.
   it("Initialize an EventAccount with random event_id and vault", async () => {
     const program = anchor.workspace.ChooseOption;
