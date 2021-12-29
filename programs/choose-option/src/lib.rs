@@ -1,6 +1,8 @@
 pub use anchor_lang::prelude::*;
+pub use user::*;
 pub use event::*;
 
+pub mod user;
 pub mod event;
 
 declare_id!("6zHwdgEhvbYQ7H3Rf3kc3pQSsQcctv89QnoNYQpquVHM");
@@ -45,6 +47,13 @@ mod choose_option {
         let event_account = &mut ctx.accounts.event_account;
         event_account.correct_option_number = std::u8::MAX;
         event_account.state = 2;
+        Ok(())
+    }
+
+    pub fn initialize_user(
+        ctx: Context<InitializeUserAccount>, 
+    ) -> ProgramResult {
+        // let user_account = &mut ctx.accounts.user_account;
         Ok(())
     }
 }

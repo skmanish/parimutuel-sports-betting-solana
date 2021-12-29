@@ -28,8 +28,7 @@ pub struct EventAccount {
 pub struct InitializeEventAccount<'info> {
     #[account(init, payer = authority, space = 110)]
     pub event_account: Account<'info, EventAccount>,
-    #[account(mut)]
-    pub authority: Signer<'info>,
+    pub authority: Signer<'info>,  // WHY SHOULD THIS BE MUTABLE?
     pub system_program: Program<'info, System>,
 }
 
