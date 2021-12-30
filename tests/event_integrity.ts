@@ -43,40 +43,4 @@ describe('EventIntegrity', () => {
     assert.deepStrictEqual(eventAccount.authority, provider.wallet.publicKey);
     assert.deepStrictEqual(eventAccount.vault, dummyVaultAccount.publicKey);
   });
-
-  it('Initialize an EventAccount with pre-existing event_id should fail',
-      async () => {
-        const program = anchor.workspace.ChooseOption;
-        const dummyEventAccount = anchor.web3.Keypair.generate();
-        const dummyVaultAccount = anchor.web3.Keypair.generate();
-        const randomEventId = 5;
-
-        const initializeEvent = async () => {
-          await program.rpc.initializeEvent(
-              randomEventId,
-              provider.wallet.publicKey,
-              dummyVaultAccount.publicKey,
-              {
-                accounts: {
-                  eventAccount: dummyEventAccount.publicKey,
-                  authority: provider.wallet.publicKey,
-                  systemProgram: SystemProgram.programId,
-                },
-                signers: [dummyEventAccount],
-              },
-          );
-          return await program.account.eventAccount.fetch(
-              dummyEventAccount.publicKey,
-          );
-        };
-        await initializeEvent();
-        try {
-          await initializeEvent();
-        } catch (e) {
-          const error = e as SendTransactionError;
-          expect(error.toString()).to.include(
-              'This transaction has already been processed',
-          );
-        }
-      });
 });

@@ -52,8 +52,27 @@ mod choose_option {
 
     pub fn initialize_user(
         ctx: Context<InitializeUserAccount>, 
+        authority: Pubkey,
+        market_reference: Pubkey,
     ) -> ProgramResult {
-        // let user_account = &mut ctx.accounts.user_account;
+        let user_account = &mut ctx.accounts.user_account;
+        user_account.user_authority = authority;
+        user_account.market_reference = market_reference;
+        user_account.chosen_option = std::u8::MAX;
+        user_account.bet_amount_in_sol_cents = 0;
+        Ok(())
+    }
+
+    pub fn register_user_choice(
+        ctx: Context<RegisterUserChoice>,
+        chosen_option: u8,
+        bet_amount_in_sol_cents: u16,
+    ) -> ProgramResult {
+        let user_account = &mut ctx.accounts.user_account;
+        let event_account = &mut ctx.accounts.event_account;
+
+        user_account.chosen_option = chosen_option;
+        user_account.bet_amount_in_sol_cents = bet_amount_in_sol_cents;
         Ok(())
     }
 }
