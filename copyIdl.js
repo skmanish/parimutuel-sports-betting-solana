@@ -1,4 +1,4 @@
 const fs = require('fs');
-const idl = require('./target/idl/choose-option.json');
+const idl = require('./target/idl/choose_option.json');
 
-fs.writeFileSync('./app/src/idl.json', JSON.stringify(idl));
+fs.writeFileSync('./frontend/src/idl.json', JSON.stringify(idl));
