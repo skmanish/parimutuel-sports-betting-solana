@@ -15,7 +15,6 @@ import {
   isDateLateEnough} from '../../utils';
 import {EventMetadata, isOptionSequenceValid} from '../../types/event';
 
-
 const validateValues = (values: EventMetadata) => {
   const errors: Partial<EventMetadata> = {};
   if (!isDateLateEnough(values.eventStartTime, 30)) {
@@ -60,7 +59,11 @@ const validateValues = (values: EventMetadata) => {
   return errors;
 };
 
-export default function CreateEventForm() {
+export default function CreateEventForm({
+  createEventHandler,
+}: {
+  createEventHandler: (event: EventMetadata) => Promise<string>
+}) {
   return (
     <Box
       display="flex"
@@ -86,7 +89,8 @@ export default function CreateEventForm() {
             eventOption5: '',
           }}
           validate={validateValues}
-          onSubmit={(values, {setSubmitting}) => {
+          onSubmit={async (values, {setSubmitting}) => {
+            await createEventHandler(values);
             setTimeout(() => {
               setSubmitting(false);
               alert(JSON.stringify(values, null, 2));

@@ -1,3 +1,5 @@
+/* IF YOU CHANGE THIS FILE, PLEASE ALSO CHANGE backend/types/event.ts */
+
 export type EventMetadata = {
     eventTitle: string;
     eventQuestion: string;
