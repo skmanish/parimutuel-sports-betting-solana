@@ -1,21 +1,25 @@
+/* eslint-disable require-jsdoc */
 import {Wallet} from '@project-serum/anchor';
 import {EventMetadata} from '../types/event';
 import axios from 'axios';
 import {createEventAccount} from '../utils/program-utils';
 
-const createEvent = async (
-    event: EventMetadata,
-    wallet: Wallet,
-): Promise<string> => {
-  createEventAccount(event, wallet);
-  // await axios.post('/api/events/create', event).then((response) => {
-  //   console.log(response.data);
-  // });
-  return 'success';
-};
-const getAllEvents = async (): Promise<[EventMetadata]> => {
-  const response = await axios.get('/api/events');
-  return response.data as [EventMetadata];
-};
+class eventsApi {
+  static createEvent = async (
+      event: EventMetadata,
+      wallet: Wallet,
+  ): Promise<string> => {
+    const updatedEvent = await createEventAccount(event, wallet);
+    await axios.post('/api/events/create', updatedEvent).then((response) => {
+      console.log(response.data);
+    });
+    return 'success';
+  };
 
-export {createEvent, getAllEvents};
+  static getAllEvents = async (): Promise<EventMetadata[]> => {
+    const response = await axios.get('/api/events');
+    return response.data as EventMetadata[];
+  };
+}
+
+export {eventsApi};

@@ -27,7 +27,7 @@ const db = getFirestore();
 const eventsDb = db.collection('events');
 
 app.post('/api/events/create', async (req, res) => {
-  await eventsDb.add(req.body);
+  await eventsDb.doc(req.body.eventAccountPublicKeyBase58).set(req.body);
   res.json({message: 'success'});
 });
 

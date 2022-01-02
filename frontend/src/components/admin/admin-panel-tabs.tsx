@@ -5,8 +5,6 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import CreateEventForm from './admin-panel-tab-create-event';
 import EventsTable from './admin-panel-tab-events';
-import {EventMetadata} from '../../types/event';
-import {Wallet} from '@project-serum/anchor';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -37,13 +35,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function AdminPanelTabs({
-  createEventHandler,
-  getEventsHandler,
-}: {
-  createEventHandler: (event: EventMetadata, wallet: Wallet) => Promise<string>,
-  getEventsHandler: () => Promise<[EventMetadata]>,
-}) {
+export default function AdminPanelTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -63,14 +55,13 @@ export default function AdminPanelTabs({
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <EventsTable
-          getEventsHandler={getEventsHandler}/>
+        <EventsTable />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Modify event
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <CreateEventForm createEventHandler={createEventHandler}/>
+        <CreateEventForm />
       </TabPanel>
     </Box>
   );

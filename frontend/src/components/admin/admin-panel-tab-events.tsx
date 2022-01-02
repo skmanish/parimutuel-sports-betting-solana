@@ -14,6 +14,7 @@ import {EventMetadata} from '../../types/event';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Typography from '@mui/material/Typography';
+import {eventsApi} from '../../api';
 
 function Row(props: { event: EventMetadata }) {
   const {event} = props;
@@ -36,6 +37,7 @@ function Row(props: { event: EventMetadata }) {
         </TableCell>
         <TableCell align="right">{event.eventStartTime}</TableCell>
         <TableCell align="right">{event.eventEndTime}</TableCell>
+        <TableCell align="right">{event.eventResolveTime}</TableCell>
         <TableCell align="right">{event.eventVaultPubkey}</TableCell>
       </TableRow>
       <TableRow>
@@ -58,14 +60,10 @@ function Row(props: { event: EventMetadata }) {
   );
 }
 
-export default function EventsTable({
-  getEventsHandler,
-}: {
-  getEventsHandler: () => Promise<[EventMetadata]>,
-}) {
+export default function EventsTable() {
   const [events, setEvents] = React.useState<EventMetadata[]>([]);
   const getAllEvents = async () => {
-    const events = await getEventsHandler();
+    const events = await eventsApi.getAllEvents();
     setEvents(events);
     console.log(events);
   };
@@ -81,6 +79,7 @@ export default function EventsTable({
             <TableCell>Title</TableCell>
             <TableCell align="center">Start Time&nbsp;(GMT)</TableCell>
             <TableCell align="center">End Time&nbsp;(GMT)</TableCell>
+            <TableCell align="center">Resolve Time&nbsp;(GMT)</TableCell>
             <TableCell align="center">Vault Pubkey</TableCell>
           </TableRow>
         </TableHead>

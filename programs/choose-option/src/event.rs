@@ -1,5 +1,6 @@
 use anchor_lang::prelude::*;
 
+// IF YOU CHANGE THIS, PLEASE ALSO CHANGE in frontend/types/events.ts.
 #[account]
 pub struct EventAccount {
     pub authority: Pubkey,

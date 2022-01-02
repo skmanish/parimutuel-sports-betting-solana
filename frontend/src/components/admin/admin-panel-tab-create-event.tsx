@@ -14,8 +14,8 @@ import {
   getDateDiffMinutes,
   isDateLateEnough} from '../../utils';
 import {EventMetadata, isOptionSequenceValid} from '../../types/event';
-import {Wallet} from '@project-serum/anchor';
 import {useWallet} from '@solana/wallet-adapter-react';
+import {eventsApi} from '../../api';
 
 const validateValues = (values: EventMetadata) => {
   const errors: Partial<EventMetadata> = {};
@@ -61,11 +61,7 @@ const validateValues = (values: EventMetadata) => {
   return errors;
 };
 
-export default function CreateEventForm({
-  createEventHandler,
-}: {
-  createEventHandler: (event: EventMetadata, wallet: Wallet) => Promise<string>
-}) {
+export default function CreateEventForm() {
   const wallet = useWallet();
   return (
     <Box
@@ -83,8 +79,12 @@ export default function CreateEventForm({
             eventTitle: '',
             eventQuestion: '',
             eventVaultPubkey: '',
-            eventStartTime: getCurrentUTCTime(),
-            eventEndTime: getCurrentUTCTime(),
+            eventStartTime: new Date(
+                getCurrentUTCTime().getTime() + 35*60*1000),
+            eventEndTime: new Date(
+                getCurrentUTCTime().getTime() + 75*60*1000),
+            eventResolveTime: new Date(
+                getCurrentUTCTime().getTime() + 105*60*1000),
             eventOption1: '',
             eventOption2: '',
             eventOption3: '',
@@ -93,12 +93,11 @@ export default function CreateEventForm({
           }}
           validate={validateValues}
           onSubmit={async (values, {setSubmitting}) => {
-            console.log('onSubmit');
             // @ts-ignore
-            await createEventHandler(values, wallet);
+            await eventsApi.createEvent(values, wallet);
             setTimeout(() => {
               setSubmitting(false);
-              alert(JSON.stringify(values, null, 2));
+              alert('Event created successfully');
             }, 500);
           }} >
           {({submitForm, isSubmitting}) => (
@@ -119,6 +118,11 @@ export default function CreateEventForm({
                   component={DateTimePicker}
                   name="eventEndTime"
                   label="End Time (GMT)"
+                />
+                <Field
+                  component={DateTimePicker}
+                  name="eventResolveTime"
+                  label="Resolve Time (GMT)"
                 />
               </Stack>
               <Field
@@ -173,6 +177,13 @@ export default function CreateEventForm({
                   sx={{width: 100}}
                 />
               </Stack>
+              <Field
+                component={TextField}
+                name="eventImageUrl"
+                label="Event Image URL"
+                variant="outlined"
+                defaultValue="https://coinscribble.com/wp-content/uploads/2018/12/twtcrypquiz.png"
+              />
               {isSubmitting && <LinearProgress /> }
               <Button
                 variant="contained"

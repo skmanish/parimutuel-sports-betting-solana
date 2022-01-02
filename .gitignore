@@ -44,3 +44,4 @@ test-ledger
 
 frontend/.env
 strut-*.json
+frontend/src/idl.json
