@@ -50,17 +50,13 @@ export default function AdminPanelTabs() {
           onChange={handleChange}
           aria-label="basic tabs example">
           <Tab label="All Events" {...a11yProps(0)} />
-          <Tab label="Modify Event" {...a11yProps(1)} />
-          <Tab label="Create event" {...a11yProps(2)} />
+          <Tab label="Create event" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
         <EventsTable />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Modify event
-      </TabPanel>
-      <TabPanel value={value} index={2}>
         <CreateEventForm />
       </TabPanel>
     </Box>

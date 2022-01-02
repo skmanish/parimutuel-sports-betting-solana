@@ -30,7 +30,11 @@ export default function EventStatesAndActionsBox(
   ];
   return (
     <Box sx={{display: 'flexbox'}}>
-      <Paper sx={{margin: 1, padding: 2, maxWidth: 'md', alignItems: 'center'}}>
+      <Paper sx={{
+        margin: 1,
+        padding: 2,
+        alignItems: 'center',
+      }}>
         <Stack spacing={2} sx={{alignItems: 'center'}}>
           <Typography variant='body2' color='text.secondary'>
             {event.eventQuestion}
