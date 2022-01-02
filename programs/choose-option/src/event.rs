@@ -2,7 +2,6 @@ use anchor_lang::prelude::*;
 
 #[account]
 pub struct EventAccount {
-    pub event_id: u32,
     pub authority: Pubkey,
     pub vault: Pubkey,
 

@@ -41,3 +41,6 @@ wheels/
 target
 node_modules
 test-ledger
+
+frontend/.env
+strut-*.json

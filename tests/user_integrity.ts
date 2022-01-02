@@ -10,7 +10,6 @@ describe('UserIntegrity', () => {
   anchor.setProvider(provider);
   const program = anchor.workspace.ChooseOption as Program;
 
-  const eventId: Number = 10;
   const eventVaultAccount: Keypair = anchor.web3.Keypair.generate();
   const eventAccount: Keypair = anchor.web3.Keypair.generate();
 
@@ -18,7 +17,6 @@ describe('UserIntegrity', () => {
 
   before(async () => {
     await program.rpc.initializeEvent(
-        eventId,
         provider.wallet.publicKey,
         eventVaultAccount.publicKey,
         {

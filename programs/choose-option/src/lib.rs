@@ -13,12 +13,10 @@ mod choose_option {
 
     pub fn initialize_event(
         ctx: Context<InitializeEventAccount>, 
-        event_id: u32,
         authority: Pubkey, 
         vault: Pubkey
     ) -> ProgramResult {
         let event_account = &mut ctx.accounts.event_account;
-        event_account.event_id = event_id;
         event_account.authority = authority;
         event_account.vault = vault;
         event_account.option_1_balance_cents = 0;
