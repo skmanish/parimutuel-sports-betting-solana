@@ -74,8 +74,8 @@ export default function EventsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {events.map((event) => (
-            <Row key={event.eventTitle} event={event} />
+          {events.map((event, index) => (
+            <Row key={index} event={event} />
           ))}
         </TableBody>
       </Table>

@@ -3,11 +3,10 @@
 import {PublicKey} from '@solana/web3.js';
 
 export enum EventState {
-  DEAD = 0,
-  CREATED = 1,
-  STARTED = 2,
-  ENDED = 3,
-  RESOLVED = 4,
+  CREATED = 0,
+  STARTED = 1,
+  ENDED = 2,
+  RESOLVED = 3,
 };
 
 /* IF YOU CHANGE THIS, PLEASE ALSO CHANGE in

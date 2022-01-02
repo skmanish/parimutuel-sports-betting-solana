@@ -56,7 +56,7 @@ pub struct EndEvent<'info> {
 pub struct ResolveEvent<'info> {
     pub authority: Signer<'info>,
     #[account(mut, has_one = authority, constraint={
-        event_account.state == 1
+        event_account.state == 2
     } @ ErrorCode::CannotResolveEventNotInEndedState)]
     pub event_account: Account<'info, EventAccount>,
 }

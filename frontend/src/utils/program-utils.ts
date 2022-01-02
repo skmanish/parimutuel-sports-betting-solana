@@ -60,4 +60,94 @@ const createEventAccount = async (
   }
 };
 
-export {createEventAccount};
+const setEventStarted = async (event: EventMetadata, wallet: Wallet) => {
+  const provider = await getProvider(wallet);
+  const program = new Program(idl as Idl, programID, provider);
+  const eventAccountPubkey = event.eventAccountPublicKeyBase58;
+  if (!eventAccountPubkey) {
+    console.log('Invalid event account pubkey');
+    return;
+  }
+  try {
+    await program.rpc.setEventStarted(
+        {
+          accounts: {
+            eventAccount: eventAccountPubkey,
+            authority: provider.wallet.publicKey,
+          },
+        },
+    );
+    const fetchedEventAccount = await program.account.eventAccount.fetch(
+        eventAccountPubkey) as FetchedEventAccountType;
+    console.log(fetchedEventAccount);
+    event = populateEventMetadataWithFetchedAccount(event, fetchedEventAccount);
+    return event;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const setEventEnded = async (event: EventMetadata, wallet: Wallet) => {
+  const provider = await getProvider(wallet);
+  const program = new Program(idl as Idl, programID, provider);
+  const eventAccountPubkey = event.eventAccountPublicKeyBase58;
+  if (!eventAccountPubkey) {
+    console.log('Invalid event account pubkey');
+    return;
+  }
+  try {
+    await program.rpc.setEventEnded(
+        {
+          accounts: {
+            eventAccount: eventAccountPubkey,
+            authority: provider.wallet.publicKey,
+          },
+        },
+    );
+    const fetchedEventAccount = await program.account.eventAccount.fetch(
+        eventAccountPubkey) as FetchedEventAccountType;
+    console.log(fetchedEventAccount);
+    event = populateEventMetadataWithFetchedAccount(event, fetchedEventAccount);
+    return event;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const setEventResolved = async (
+    event: EventMetadata,
+    wallet: Wallet,
+    correctOptionNumber: Number,
+) => {
+  const provider = await getProvider(wallet);
+  const program = new Program(idl as Idl, programID, provider);
+  const eventAccountPubkey = event.eventAccountPublicKeyBase58;
+  if (!eventAccountPubkey) {
+    console.log('Invalid event account pubkey');
+    return;
+  }
+  if (correctOptionNumber >=5 || correctOptionNumber <0) {
+    console.log('Invalid correctOptionNumber');
+    return;
+  }
+  try {
+    await program.rpc.setEventResolved(
+        correctOptionNumber,
+        {
+          accounts: {
+            eventAccount: eventAccountPubkey,
+            authority: provider.wallet.publicKey,
+          },
+        },
+    );
+    const fetchedEventAccount = await program.account.eventAccount.fetch(
+        eventAccountPubkey) as FetchedEventAccountType;
+    console.log(fetchedEventAccount);
+    event = populateEventMetadataWithFetchedAccount(event, fetchedEventAccount);
+    return event;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export {createEventAccount, setEventStarted, setEventEnded, setEventResolved};

@@ -31,6 +31,11 @@ app.post('/api/events/create', async (req, res) => {
   res.json({message: 'success'});
 });
 
+app.post('/api/events/update', async (req, res) => {
+  await eventsDb.doc(req.body.eventAccountPublicKeyBase58).set(req.body);
+  res.json({message: 'success'});
+});
+
 app.get('/api/events', async (req, res) => {
   const snapshot = await eventsDb.get();
   const events = snapshot.docs.map((doc) => {
