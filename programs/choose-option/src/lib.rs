@@ -5,7 +5,7 @@ pub use event::*;
 pub mod user;
 pub mod event;
 
-declare_id!("6zHwdgEhvbYQ7H3Rf3kc3pQSsQcctv89QnoNYQpquVHM");
+declare_id!("6fMCb35WSsuGAXKRMfMzZd9nnweqFkj5RXcRYMsX4orc");
 
 #[program]
 mod choose_option {

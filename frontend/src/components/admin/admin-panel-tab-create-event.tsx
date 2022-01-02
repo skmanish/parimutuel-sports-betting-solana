@@ -14,6 +14,8 @@ import {
   getDateDiffMinutes,
   isDateLateEnough} from '../../utils';
 import {EventMetadata, isOptionSequenceValid} from '../../types/event';
+import {Wallet} from '@project-serum/anchor';
+import {useWallet} from '@solana/wallet-adapter-react';
 
 const validateValues = (values: EventMetadata) => {
   const errors: Partial<EventMetadata> = {};
@@ -62,8 +64,9 @@ const validateValues = (values: EventMetadata) => {
 export default function CreateEventForm({
   createEventHandler,
 }: {
-  createEventHandler: (event: EventMetadata) => Promise<string>
+  createEventHandler: (event: EventMetadata, wallet: Wallet) => Promise<string>
 }) {
+  const wallet = useWallet();
   return (
     <Box
       display="flex"
@@ -90,7 +93,9 @@ export default function CreateEventForm({
           }}
           validate={validateValues}
           onSubmit={async (values, {setSubmitting}) => {
-            await createEventHandler(values);
+            console.log('onSubmit');
+            // @ts-ignore
+            await createEventHandler(values, wallet);
             setTimeout(() => {
               setSubmitting(false);
               alert(JSON.stringify(values, null, 2));

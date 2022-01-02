@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import CreateEventForm from './admin-panel-tab-create-event';
 import EventsTable from './admin-panel-tab-events';
 import {EventMetadata} from '../../types/event';
+import {Wallet} from '@project-serum/anchor';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -40,7 +41,7 @@ export default function AdminPanelTabs({
   createEventHandler,
   getEventsHandler,
 }: {
-  createEventHandler: (event: EventMetadata) => Promise<string>,
+  createEventHandler: (event: EventMetadata, wallet: Wallet) => Promise<string>,
   getEventsHandler: () => Promise<[EventMetadata]>,
 }) {
   const [value, setValue] = React.useState(0);

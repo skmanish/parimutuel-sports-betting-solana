@@ -92,7 +92,7 @@ function App() {
 }
 
 const AppWithProvider = () => (
-  <ConnectionProvider endpoint="http://127.0.0.1:8899">
+  <ConnectionProvider endpoint={process.env.REACT_APP_BLOCKCHAIN_URL as string}>
     <WalletProvider wallets={wallets} autoConnect>
       <WalletModalProvider>
         <BrowserRouter>
