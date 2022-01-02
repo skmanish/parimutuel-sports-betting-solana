@@ -1,4 +1,6 @@
 use anchor_lang::prelude::*;
+pub use crate::errors::ErrorCode;
+
 
 // IF YOU CHANGE THIS, PLEASE ALSO CHANGE in frontend/types/events.ts.
 #[account]
@@ -35,13 +37,26 @@ pub struct InitializeEventAccount<'info> {
 #[derive(Accounts)]
 pub struct StartEvent<'info> {
     pub authority: Signer<'info>,
-    #[account(mut, has_one = authority)]
+    #[account(mut, has_one = authority, constraint={
+        event_account.state == 0
+    } @ ErrorCode::CannotStartEventNotInCreatedState)]
     pub event_account: Account<'info, EventAccount>,
 }
 
 #[derive(Accounts)]
 pub struct EndEvent<'info> {
     pub authority: Signer<'info>,
-    #[account(mut, has_one = authority)]
+    #[account(mut, has_one = authority, constraint={
+        event_account.state == 1
+    } @ ErrorCode::CannotEndEventNotInStartState)]
+    pub event_account: Account<'info, EventAccount>,
+}
+
+#[derive(Accounts)]
+pub struct ResolveEvent<'info> {
+    pub authority: Signer<'info>,
+    #[account(mut, has_one = authority, constraint={
+        event_account.state == 1
+    } @ ErrorCode::CannotResolveEventNotInEndedState)]
     pub event_account: Account<'info, EventAccount>,
 }

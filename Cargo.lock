@@ -387,6 +387,7 @@ dependencies = [
  "anchor-lang",
  "anchor-spl",
  "spl-token",
+ "thiserror",
 ]
 
 [[package]]

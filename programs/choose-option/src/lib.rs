@@ -1,9 +1,12 @@
 pub use anchor_lang::prelude::*;
+
+pub mod errors;
+pub mod event;
+pub mod user;
+
 pub use user::*;
 pub use event::*;
-
-pub mod user;
-pub mod event;
+pub use errors::ErrorCode;
 
 declare_id!("6fMCb35WSsuGAXKRMfMzZd9nnweqFkj5RXcRYMsX4orc");
 
@@ -45,6 +48,16 @@ mod choose_option {
         let event_account = &mut ctx.accounts.event_account;
         event_account.correct_option_number = std::u8::MAX;
         event_account.state = 2;
+        Ok(())
+    }
+
+    pub fn set_event_resolved(
+        ctx: Context<ResolveEvent>, 
+        correct_option_number: u8
+    ) -> ProgramResult {
+        let event_account = &mut ctx.accounts.event_account;
+        event_account.correct_option_number = correct_option_number;
+        event_account.state = 3;
         Ok(())
     }
 

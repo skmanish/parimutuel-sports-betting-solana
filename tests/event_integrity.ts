@@ -13,27 +13,31 @@ describe('EventIntegrity', () => {
   const program = anchor.workspace.ChooseOption as Program;
 
   const createEventAccount = async (
-      eventAccount: Keypair, vaultAccount: PublicKey) => {
+      eventAccount: Keypair,
+      vaultAccount: PublicKey,
+      authority: PublicKey,
+  ) => {
     await program.rpc.initializeEvent(
-        provider.wallet.publicKey,
+        authority,
         vaultAccount,
         {
           accounts: {
             eventAccount: eventAccount.publicKey,
-            authority: provider.wallet.publicKey,
+            authority: authority,
             systemProgram: SystemProgram.programId,
           },
           signers: [eventAccount],
         },
     );
   };
+
   it('Initialize an EventAccount with random event_id and vault', async () => {
     const dummyEventAccount: Keypair = anchor.web3.Keypair.generate();
     const dummyVaultAccount: Keypair = anchor.web3.Keypair.generate();
-    // Returns a random integer from 0 to 99:
     await createEventAccount(
         dummyEventAccount,
-        dummyVaultAccount.publicKey);
+        dummyVaultAccount.publicKey,
+        provider.wallet.publicKey);
     const eventAccount: any = await program.account.eventAccount.fetch(
         dummyEventAccount.publicKey,
     );
@@ -50,11 +54,52 @@ describe('EventIntegrity', () => {
     const dummyVaultAccount: Keypair = anchor.web3.Keypair.generate();
 
     const eventAccount1 = anchor.web3.Keypair.generate();
-    await createEventAccount(eventAccount1, dummyVaultAccount.publicKey);
+    await createEventAccount(
+        eventAccount1,
+        dummyVaultAccount.publicKey,
+        provider.wallet.publicKey);
     const eventAccount2 = anchor.web3.Keypair.generate();
-    await createEventAccount(eventAccount2, dummyVaultAccount.publicKey);
+    await createEventAccount(
+        eventAccount2,
+        dummyVaultAccount.publicKey,
+        provider.wallet.publicKey);
 
     const eventAccounts = await program.account.eventAccount.all();
     assert.ok(eventAccounts.length >= 2);
+  });
+
+  it('Start an event', async () => {
+    const dummyVaultAccount: Keypair = anchor.web3.Keypair.generate();
+    const dummyEventAccount: Keypair = anchor.web3.Keypair.generate();
+    await createEventAccount(
+        dummyEventAccount,
+        dummyVaultAccount.publicKey,
+        provider.wallet.publicKey);
+    await program.rpc.setEventStarted({
+      accounts: {
+        eventAccount: dummyEventAccount.publicKey,
+        authority: provider.wallet.publicKey,
+      },
+    });
+  });
+
+  it('Cannot end an event not in started state', async () => {
+    const dummyVaultAccount: Keypair = anchor.web3.Keypair.generate();
+    const dummyEventAccount: Keypair = anchor.web3.Keypair.generate();
+    await createEventAccount(
+        dummyEventAccount,
+        dummyVaultAccount.publicKey,
+        provider.wallet.publicKey);
+    try {
+      const transactionSignature = await program.rpc.setEventEnded({
+        accounts: {
+          eventAccount: dummyEventAccount.publicKey,
+          authority: provider.wallet.publicKey,
+        },
+      });
+      console.log('Transaction Signature', transactionSignature);
+    } catch (e) {
+      console.log('error', e.code);
+    }
   });
 });
