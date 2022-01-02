@@ -1,7 +1,6 @@
 /* eslint-disable require-jsdoc */
 import Paper from '@mui/material/Paper';
 import Collapse from '@mui/material/Collapse';
-import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,8 +12,8 @@ import * as React from 'react';
 import {EventMetadata} from '../../types/event';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Typography from '@mui/material/Typography';
 import {eventsApi} from '../../api';
+import EventStatesAndActionsBox from './event-states-and-actions-paper';
 
 function Row(props: { event: EventMetadata }) {
   const {event} = props;
@@ -43,16 +42,7 @@ function Row(props: { event: EventMetadata }) {
       <TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{margin: 1}}>
-              <Typography align="center">
-                <b>Question</b>: {event.eventQuestion}
-              </Typography>
-              <Typography align="center">
-                <b>Options</b>: {event.eventOption1}, {event.eventOption2},
-                {event.eventOption3}, {event.eventOption4},
-                {event.eventOption5}
-              </Typography>
-            </Box>
+            <EventStatesAndActionsBox event={event} />
           </Collapse>
         </TableCell>
       </TableRow>
