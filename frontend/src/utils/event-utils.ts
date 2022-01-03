@@ -30,9 +30,7 @@ const getValidOptionsPercentageStakes = (event: EventMetadata) => {
   const ret = new Array(validOptions.length).fill(100/validOptions.length);
   if (sum != 0) {
     for (let i = 0; i < validOptions.length; i++) {
-      if (possibleStakes[i]) {
-        ret[i] = (possibleStakes[i] as number)*100/sum;
-      }
+      ret[i] = (possibleStakes[i] as number)*100/sum;
     }
   }
   return ret;

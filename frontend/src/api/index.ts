@@ -77,7 +77,6 @@ class eventsApi {
       return;
     }
     await axios.post('/api/events/update', updatedEvent).then((response) => {
-      console.log(response.data);
     });
     return updatedEvent;
   }

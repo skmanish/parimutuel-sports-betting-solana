@@ -13,16 +13,29 @@ import {
 } from '@mui/material';
 import LinearProgressWithLabel from './progress-with-label';
 import {userApi} from '../../api/userApi';
+import {useWallet} from '@solana/wallet-adapter-react';
+import {eventsApi} from '../../api';
+import {useState} from 'react';
 
 export default function EventCardOptionsAndActions(
     props: {event: EventMetadata},
 ) {
-  const {event} = props;
+  const wallet = useWallet();
+  const [event, setEvent] = useState<EventMetadata>(props.event);
   const validOptionsText: string[] = getValidOptions(event);
   const validOptionsPercentageStakes: number[
   ] = getValidOptionsPercentageStakes(event);
   const bettable = userApi.canIBetInAnEvent(event, {});
-  console.log('Bettable for event: ', event.eventTitle, ' is ', bettable);
+  const placeBet = async (chosenOption: number) => {
+    // @ts-ignore
+    const apiResponse = await userApi.placeBet(event, wallet,
+        5e8, chosenOption);
+    if (apiResponse && apiResponse.success) {
+      // @ts-ignore
+      const updatedEvent = await eventsApi.updateEvent(event, wallet);
+      if (updatedEvent) setEvent(updatedEvent);
+    }
+  };
   return (
     <Stack spacing={1} sx={{width: '100%'}}>
       <Divider light style={{width: '100%'}}/>
@@ -48,6 +61,9 @@ export default function EventCardOptionsAndActions(
               variant="outlined"
               size='small'
               color="error"
+              onClick={() => {
+                placeBet(index);
+              }}
               disabled={'error' in bettable}
               sx={{fontSize: '10px', width: '50%'}}
             >Bet 0.5 SOL</Button>

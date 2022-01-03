@@ -22,7 +22,7 @@ export default function UserHomePage(props: any) {
       <Grid
         container
         rowSpacing={2}
-        columnSpacing={1}
+        columnSpacing={2}
         direction="row"
         alignItems="flex-start"
         justifyContent="space-evenly"

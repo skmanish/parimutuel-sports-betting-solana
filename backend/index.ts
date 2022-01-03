@@ -11,9 +11,11 @@ import {
 } from 'firebase-admin/firestore';
 import serviceAccount from '../strut-336918-eeb8eca850d9.json';
 import UserApis from './user/user';
-import {inspectTransaction} from './solana/solana';
 
 dotenv.config();
+initializeApp({
+  credential: cert(serviceAccount as ServiceAccount),
+});
 
 const PORT = process.env.PORT || 3001;
 
@@ -22,11 +24,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
-
-
-initializeApp({
-  credential: cert(serviceAccount as ServiceAccount),
-});
 
 const db = getFirestore();
 const eventsDb = db.collection('events');
@@ -53,16 +50,12 @@ app.get('/api/events', async (req, res) => {
 });
 
 /* User APIs */
-const userApis = new UserApis();
+const userApis = new UserApis(db);
 // Returns a list of events that user has participated/bet in.
-app.get('/api/user/events', userApis.myevents);
-// app.get('/api/user/createbet', userApis.createBet);
+app.get('/api/user/events', userApis.myevents.bind(userApis));
+app.get('/api/user/event', userApis.myBetInThisEvent.bind(userApis));
+app.post('/api/user/placebet', userApis.placeBet.bind(userApis));
 // app.get('/api/user/redeembet', userApis.redeemBet);
-
-/* Solana APIs */
-inspectTransaction(
-    // eslint-disable-next-line max-len
-    '5fjcMHgAwRkkb1KZSiSkLcrtBdDd7JcAuTjGe2F2687KRUVujPMvRbmi7ni6voAz8MZF4witoewsrqrPbTHxmm5V');
 
 app.get('/api', (req, res) => {
   res.json({message: 'Hello from server!'});

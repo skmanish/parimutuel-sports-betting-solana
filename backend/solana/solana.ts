@@ -6,6 +6,21 @@ import {
   sendAndConfirmTransaction,
   PublicKey,
 } from '@solana/web3.js';
+import bs58 from 'bs58';
+import {Wallet} from '@project-serum/anchor';
+
+const getAdminCreateUpdateKeyPairFromDb = async (db) => {
+  const keypair = await db.collection('wallets').doc(
+      'admin-for-create-update-eventaccount').get();
+  if (keypair.exists &&
+    'privateKey' in keypair.data() &&
+    'publicKey' in keypair.data()) {
+    return new Wallet(new Keypair({
+      publicKey: new PublicKey(keypair.data().publicKey).toBytes(),
+      secretKey: bs58.decode(keypair.data().privateKey),
+    }));
+  };
+};
 
 const transferSolToAccount = async (
     fromKeypair: Keypair,
@@ -31,4 +46,8 @@ const inspectTransaction = async (transactionSignature: string) => {
   console.log(tx);
 };
 
-export {transferSolToAccount, inspectTransaction};
+export {
+  transferSolToAccount,
+  inspectTransaction,
+  getAdminCreateUpdateKeyPairFromDb,
+};

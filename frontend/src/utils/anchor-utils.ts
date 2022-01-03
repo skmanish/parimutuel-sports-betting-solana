@@ -31,13 +31,14 @@ async function getProvider(wallet: Wallet) {
 
 async function sendLamports(
     wallet: Wallet,
-    destinationPublicKey: PublicKey) {
+    destinationPublicKey: PublicKey,
+    lamports: number) {
   const provider = await getProvider(wallet);
   const transaction = new Transaction().add(
       SystemProgram.transfer({
         fromPubkey: wallet.publicKey,
         toPubkey: destinationPublicKey,
-        lamports: 100000000,
+        lamports: lamports,
       }),
   );
   transaction.feePayer = wallet.publicKey;
