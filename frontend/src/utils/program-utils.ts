@@ -150,4 +150,28 @@ const setEventResolved = async (
   }
 };
 
-export {createEventAccount, setEventStarted, setEventEnded, setEventResolved};
+const fetchEvent = async (event: EventMetadata, wallet: Wallet) => {
+  const provider = await getProvider(wallet);
+  const program = new Program(idl as Idl, programID, provider);
+  const eventAccountPubkey = event.eventAccountPublicKeyBase58;
+  if (!eventAccountPubkey) {
+    console.log('Invalid event account pubkey');
+    return;
+  }
+  try {
+    const fetchedEventAccount = await program.account.eventAccount.fetch(
+        eventAccountPubkey) as FetchedEventAccountType;
+    event = populateEventMetadataWithFetchedAccount(event, fetchedEventAccount);
+    return event;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export {
+  createEventAccount,
+  setEventStarted,
+  setEventEnded,
+  setEventResolved,
+  fetchEvent,
+};

@@ -4,6 +4,7 @@ import {EventMetadata} from '../types/event';
 import axios from 'axios';
 import {
   createEventAccount,
+  fetchEvent,
   setEventEnded,
   setEventResolved,
   setEventStarted,
@@ -65,6 +66,20 @@ class eventsApi {
       console.log(response.data);
     });
     return 'success';
+  }
+
+  static updateEvent = async (event: EventMetadata, wallet: Wallet) => {
+    const updatedEvent = await fetchEvent(
+        event,
+        wallet,
+    );
+    if (!updatedEvent) {
+      return;
+    }
+    await axios.post('/api/events/update', updatedEvent).then((response) => {
+      console.log(response.data);
+    });
+    return updatedEvent;
   }
 }
 

@@ -1,0 +1,59 @@
+/* eslint-disable require-jsdoc */
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import {
+  CardActionArea,
+  CardActions,
+} from '@mui/material';
+
+import {useWallet} from '@solana/wallet-adapter-react';
+import React, {useState} from 'react';
+import {EventMetadata} from '../../types/event';
+import {eventsApi} from '../../api';
+import EventCardOptionsAndActions from './options-and-actions';
+
+export default function EventCard(props: {inputEvent: EventMetadata}) {
+  const {inputEvent} = props;
+  const [event, setEvent] = useState(inputEvent);
+  const wallet = useWallet();
+  React.useEffect(() => {
+    async function myUseEffect() {
+      try {
+        // @ts-ignore
+        const updatedEvent = await eventsApi.updateEvent(event, wallet);
+        if (updatedEvent) {
+          setEvent(updatedEvent);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    myUseEffect();
+  }, []);
+  return (
+    <Card >
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          src={event.eventImageUrl}
+          alt="image"
+          sx={{maxWidth: 'xs'}}
+        />
+      </CardActionArea>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {event.eventTitle}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {event.eventQuestion}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <EventCardOptionsAndActions event={event}/>
+      </CardActions>
+    </Card>
+  );
+}

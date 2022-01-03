@@ -90,6 +90,7 @@ export default function CreateEventForm() {
             eventOption3: '',
             eventOption4: '',
             eventOption5: '',
+            eventImageUrl: 'https://coinscribble.com/wp-content/uploads/2018/12/twtcrypquiz.png',
           }}
           validate={validateValues}
           onSubmit={async (values, {setSubmitting}) => {
@@ -182,7 +183,6 @@ export default function CreateEventForm() {
                 name="eventImageUrl"
                 label="Event Image URL"
                 variant="outlined"
-                defaultValue="https://coinscribble.com/wp-content/uploads/2018/12/twtcrypquiz.png"
               />
               {isSubmitting && <LinearProgress /> }
               <Button
