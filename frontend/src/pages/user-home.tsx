@@ -21,15 +21,15 @@ export default function UserHomePage(props: any) {
       <ResponsiveAppBar />
       <Grid
         container
-        rowSpacing={1}
-        columnSpacing={0}
+        rowSpacing={2}
+        columnSpacing={1}
         direction="row"
         alignItems="flex-start"
         justifyContent="space-evenly"
-        sx={{mt: 1}}
+        sx={{m: 1}}
       >
         {events.map((mEvent, mIndex) => (
-          <Grid item key={mIndex} xs={3}>
+          <Grid item key={mIndex} xs={9} sm={5} md={3}>
             <EventCard inputEvent={mEvent}/>
           </Grid>
         ))}

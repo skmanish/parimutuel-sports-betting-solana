@@ -12,4 +12,30 @@ const getValidOptions = (event: EventMetadata) => {
   return possibleOptions;
 };
 
-export {getValidOptions};
+const getValidOptionsPercentageStakes = (event: EventMetadata) => {
+  const validOptions = getValidOptions(event);
+  const possibleStakes = [
+    event.eventOption1Stakes,
+    event.eventOption2Stakes,
+    event.eventOption3Stakes,
+    event.eventOption4Stakes,
+    event.eventOption5Stakes,
+  ];
+  let sum: number = 0;
+  for (let i = 0; i < validOptions.length; i++) {
+    if (possibleStakes[i]) {
+      sum = sum + (possibleStakes[i] as number);
+    }
+  }
+  const ret = new Array(validOptions.length).fill(100/validOptions.length);
+  if (sum != 0) {
+    for (let i = 0; i < validOptions.length; i++) {
+      if (possibleStakes[i]) {
+        ret[i] = (possibleStakes[i] as number)*100/sum;
+      }
+    }
+  }
+  return ret;
+};
+
+export {getValidOptions, getValidOptionsPercentageStakes};

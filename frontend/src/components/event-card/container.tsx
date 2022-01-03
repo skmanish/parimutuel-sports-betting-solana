@@ -40,10 +40,10 @@ export default function EventCard(props: {inputEvent: EventMetadata}) {
           height="140"
           src={event.eventImageUrl}
           alt="image"
-          sx={{maxWidth: 'xs'}}
+          sx={{maxWidth: 'md'}}
         />
       </CardActionArea>
-      <CardContent>
+      <CardContent sx={{p: 1}}>
         <Typography gutterBottom variant="h5" component="div">
           {event.eventTitle}
         </Typography>
