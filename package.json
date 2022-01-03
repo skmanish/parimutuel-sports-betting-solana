@@ -2,7 +2,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint --fix \"./tests/**/*.{js,jsx,ts,tsx,json}\"",
-        "server": "nodemon backend/index.js",
+        "server": "nodemon backend/index.ts",
         "client": "yarn --cwd frontend/ start",
         "dev": "concurrently \"npm run server\" \"npm run client\""
     },
@@ -12,10 +12,12 @@
         "@solana/wallet-adapter-react-ui": "^0.2.1",
         "@solana/wallet-adapter-wallets": "^0.8.1",
         "concurrently": "^5.1.0",
+        "dotenv": "^10.0.0",
         "express": "^4.17.2",
         "firebase-admin": "^10.0.1",
         "fs": "^0.0.1-security",
-        "nodemon": "^2.0.3"
+        "nodemon": "^2.0.3",
+        "ts-node": "^10.4.0"
     },
     "devDependencies": {
         "@types/chai-as-promised": "^7.1.4",

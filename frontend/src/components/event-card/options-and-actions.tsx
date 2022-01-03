@@ -12,6 +12,7 @@ import {
   Box,
 } from '@mui/material';
 import LinearProgressWithLabel from './progress-with-label';
+import {userApi} from '../../api/userApi';
 
 export default function EventCardOptionsAndActions(
     props: {event: EventMetadata},
@@ -20,6 +21,8 @@ export default function EventCardOptionsAndActions(
   const validOptionsText: string[] = getValidOptions(event);
   const validOptionsPercentageStakes: number[
   ] = getValidOptionsPercentageStakes(event);
+  const bettable = userApi.canIBetInAnEvent(event, {});
+  console.log('Bettable for event: ', event.eventTitle, ' is ', bettable);
   return (
     <Stack spacing={1} sx={{width: '100%'}}>
       <Divider light style={{width: '100%'}}/>
@@ -45,6 +48,7 @@ export default function EventCardOptionsAndActions(
               variant="outlined"
               size='small'
               color="error"
+              disabled={'error' in bettable}
               sx={{fontSize: '10px', width: '50%'}}
             >Bet 0.5 SOL</Button>
           </Stack>

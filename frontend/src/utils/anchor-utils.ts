@@ -5,10 +5,13 @@ import {
   Commitment,
   ConfirmOptions,
   Connection,
+  PublicKey,
+  SystemProgram,
+  Transaction,
 } from '@solana/web3.js';
 
 const opts = {
-  preflightCommitment: 'processed',
+  preflightCommitment: 'confirmed',
 };
 
 async function getProvider(wallet: Wallet) {
@@ -26,4 +29,21 @@ async function getProvider(wallet: Wallet) {
   return provider;
 }
 
-export {getProvider};
+async function sendLamports(
+    wallet: Wallet,
+    destinationPublicKey: PublicKey) {
+  const provider = await getProvider(wallet);
+  const transaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: wallet.publicKey,
+        toPubkey: destinationPublicKey,
+        lamports: 100000000,
+      }),
+  );
+  transaction.feePayer = wallet.publicKey;
+  const transactionSignature = provider.send(transaction);
+  console.log('Inside anchor-utils: ', transactionSignature);
+  return transactionSignature;
+}
+
+export {getProvider, sendLamports};
