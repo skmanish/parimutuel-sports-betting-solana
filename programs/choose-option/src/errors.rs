@@ -8,4 +8,6 @@ pub enum ErrorCode {
     CannotEndEventNotInStartState,
     #[msg("Can not resolve an event that is not in ended state.")]
     CannotResolveEventNotInEndedState,
+    #[msg("Can not add user bet to an event that is not in started state.")]
+    CannotAddUserBetToEventNotInStartedState,
 }

@@ -53,6 +53,15 @@ pub struct EndEvent<'info> {
 }
 
 #[derive(Accounts)]
+pub struct AddUserBetToEvent<'info> {
+    pub authority: Signer<'info>,
+    #[account(mut, has_one = authority, constraint={
+        event_account.state == 1
+    } @ ErrorCode::CannotAddUserBetToEventNotInStartedState)]
+    pub event_account: Account<'info, EventAccount>,
+}
+
+#[derive(Accounts)]
 pub struct ResolveEvent<'info> {
     pub authority: Signer<'info>,
     #[account(mut, has_one = authority, constraint={

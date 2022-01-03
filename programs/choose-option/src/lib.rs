@@ -61,6 +61,26 @@ mod choose_option {
         Ok(())
     }
 
+    pub fn add_user_bet_to_event(
+        ctx: Context<AddUserBetToEvent>,
+        user_choice: u8,
+        user_sol_cents: u32,
+    ) -> ProgramResult {
+        let event_account = &mut ctx.accounts.event_account;
+        if user_choice == 0 {
+            event_account.option_1_balance_cents += user_sol_cents; 
+        } else if user_choice == 1 {
+            event_account.option_2_balance_cents += user_sol_cents; 
+        } else if user_choice == 2 {
+            event_account.option_3_balance_cents += user_sol_cents; 
+        } else if user_choice == 3 {
+            event_account.option_4_balance_cents += user_sol_cents; 
+        } else if user_choice == 4 {
+            event_account.option_5_balance_cents += user_sol_cents; 
+        }
+        Ok(())
+    }
+
     pub fn initialize_user(
         ctx: Context<InitializeUserAccount>, 
         authority: Pubkey,

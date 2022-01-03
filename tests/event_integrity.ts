@@ -102,4 +102,33 @@ describe('EventIntegrity', () => {
       console.log('error', e.code);
     }
   });
+
+  it('Add user bet to event', async () => {
+    const dummyVaultAccount: Keypair = anchor.web3.Keypair.generate();
+    const dummyEventAccount: Keypair = anchor.web3.Keypair.generate();
+    await createEventAccount(
+        dummyEventAccount,
+        dummyVaultAccount.publicKey,
+        provider.wallet.publicKey);
+    await program.rpc.setEventStarted({
+      accounts: {
+        eventAccount: dummyEventAccount.publicKey,
+        authority: provider.wallet.publicKey,
+      },
+    });
+    await program.rpc.addUserBetToEvent(1, 200, {
+      accounts: {
+        eventAccount: dummyEventAccount.publicKey,
+        authority: provider.wallet.publicKey,
+      },
+    });
+    const eventAccount: any = await program.account.eventAccount.fetch(
+        dummyEventAccount.publicKey,
+    );
+    assert.ok(eventAccount.option1BalanceCents === 0);
+    assert.ok(eventAccount.option2BalanceCents === 200);
+    assert.ok(eventAccount.option3BalanceCents === 0);
+    assert.ok(eventAccount.option4BalanceCents === 0);
+    assert.ok(eventAccount.option5BalanceCents === 0);
+  });
 });
