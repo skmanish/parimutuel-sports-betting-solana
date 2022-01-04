@@ -97,6 +97,9 @@ class UserApis {
     res.status(500).send({
       error: 'could not register user bet on the program.'});
   }
+
+  async redeemBet(req, res) {
+  }
 };
 export default UserApis;
 

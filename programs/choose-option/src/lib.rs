@@ -27,7 +27,7 @@ mod choose_option {
         event_account.option_3_balance_cents = 0;
         event_account.option_4_balance_cents = 0;
         event_account.option_5_balance_cents = 0;
-        event_account.correct_option_number = std::u8::MAX;
+        event_account.correct_option_number = std::u8::MAX; // 0-indexed.
         event_account.state = 0;
         Ok(())
     }

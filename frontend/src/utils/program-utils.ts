@@ -117,7 +117,7 @@ const setEventEnded = async (event: EventMetadata, wallet: Wallet) => {
 const setEventResolved = async (
     event: EventMetadata,
     wallet: Wallet,
-    correctOptionNumber: Number,
+    correctOptionNumber: Number, // is 0-indexed.
 ) => {
   const provider = await getProvider(wallet);
   const program = new Program(idl as Idl, programID, provider);

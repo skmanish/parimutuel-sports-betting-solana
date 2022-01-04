@@ -55,9 +55,9 @@ export default function EventStatesAndActionsBox(
       // @ts-ignore
       await eventsApi.endEvent(event, wallet);
     } else if (eventState == EventState.ENDED) {
-      if (correctOptionNumber <1 || correctOptionNumber >5 ||
-         eventOptions[correctOptionNumber-1] != correctOptionText ||
-         eventOptions[correctOptionNumber-1] == ''
+      if (correctOptionNumber <0 || correctOptionNumber >=5 ||
+         eventOptions[correctOptionNumber] != correctOptionText ||
+         eventOptions[correctOptionNumber] == ''
       ) {
         console.log('Please check correct option text and number');
       } else {
@@ -96,7 +96,7 @@ export default function EventStatesAndActionsBox(
           </Stack>
           <Divider light style={{width: '100%'}}/>
           {eventState==EventState.ENDED &&
-          <Stack spacing={2} direction='row'>
+          <><Stack spacing={2} direction='row'>
             <TextField
               label="Correct Option Text"
               size='small'
@@ -105,15 +105,15 @@ export default function EventStatesAndActionsBox(
               }}
               variant="outlined" />
             <TextField
-              label="Correct Option Number (1-indexed)"
+              label="Correct Option Number (0-indexed)"
               size='small'
               onChange={(event)=>{
                 setCorrectOptionNumber(
                     parseInt(event.target.value));
               }}
               variant="outlined" />
-            <Divider light style={{width: '100%'}}/>
-          </Stack>}
+          </Stack>
+          <Divider light style={{width: '100%'}}/></>}
           {eventState!=EventState.RESOLVED &&
           <Button variant="outlined"
             onClick={onClickButton}

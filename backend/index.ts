@@ -54,7 +54,7 @@ const userApis = new UserApis(db);
 app.post('/api/user/events', userApis.getMyEvents.bind(userApis));
 app.get('/api/user/event', userApis.myBetInThisEvent.bind(userApis));
 app.post('/api/user/placebet', userApis.placeBet.bind(userApis));
-// app.get('/api/user/redeembet', userApis.redeemBet);
+app.get('/api/user/redeembet', userApis.redeemBet.bind(userApis));
 
 app.get('/api', (req, res) => {
   res.json({message: 'Hello from server!'});

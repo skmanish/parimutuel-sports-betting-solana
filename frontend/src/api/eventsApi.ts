@@ -52,7 +52,7 @@ class eventsApi {
   static resolveEvent = async (
       event: EventMetadata,
       wallet: Wallet,
-      correctOptionNumber: Number,
+      correctOptionNumber: Number, // is 0-indexed.
   ) => {
     const updatedEvent = await setEventResolved(
         event,
