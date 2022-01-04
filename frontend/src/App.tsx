@@ -15,10 +15,10 @@ import {
   WalletMultiButton,
 } from '@solana/wallet-adapter-react-ui';
 import AdminPanelPage from './pages/admin-panel';
-import UserHomePage from './pages/user-home';
 import {ThemeProvider} from '@mui/material/styles';
 import theme from './theme';
 import {UserContextProvider} from './context/user-context';
+import UserHomePage from './pages/user-home';
 
 const wallets = [getPhantomWallet()];
 

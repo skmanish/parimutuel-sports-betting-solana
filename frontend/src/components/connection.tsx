@@ -11,20 +11,20 @@ const WalletConnection = () => {
     <>
       {userContext.userPublicKeyBase58 &&
       <Stack direction='row' spacing={1}>
-        <Typography>
+        <Typography color='primary'>
           {userContext.userPublicKeyBase58.substring(0, 5) +
                 '...' + userContext.userPublicKeyBase58.substring(
               userContext.userPublicKeyBase58.length-5,
               userContext.userPublicKeyBase58.length)}
         </Typography>
         <Tooltip title="Connected">
-          <PublicIcon />
+          <PublicIcon color='primary' />
         </Tooltip>
       </Stack>
       }
       {!userContext.userPublicKeyBase58 &&
       <Tooltip title='Not connected'>
-        <PublicOffIcon />
+        <PublicOffIcon color='primary'/>
       </Tooltip>
       }
     </>

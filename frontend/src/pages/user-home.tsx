@@ -1,42 +1,118 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 import * as React from 'react';
-import {useState, useContext} from 'react';
-import EventCard from '../components/event-card/container';
-import ResponsiveAppBar from '../components/responsive-appbar';
-import {EventMetadata} from '../types/event';
-import {eventsApi} from '../api/eventsApi';
-import Grid from '@mui/material/Grid';
-import {UserContext} from '../context/user-context';
+import {
+  Box,
+  Paper,
+  Typography,
+  Stack,
+  IconButton,
+  Tab,
+  Tabs,
+} from '@mui/material';
+import {WalletConnection} from '../components/connection';
+import EventsGrid from './events-grid';
 
-export default function UserHomePage(props: any) {
-  const [events, setEvents] = useState<EventMetadata[]>([]);
-  const userContext = useContext(UserContext);
-  console.log('In User page', userContext);
-  React.useEffect(() => {
-    async function myUseEffect() {
-      // @ts-ignore
-      setEvents(await eventsApi.getAllEvents());
-    }
-    myUseEffect();
-  }, []);
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const {children, value, index, ...other} = props;
+
   return (
-    <>
-      <ResponsiveAppBar />
-      <Grid
-        container
-        rowSpacing={2}
-        columnSpacing={2}
-        direction="row"
-        alignItems="flex-start"
-        justifyContent="space-evenly"
-        sx={{m: 1}}
-      >
-        {events.map((mEvent, mIndex) => (
-          <Grid item key={mIndex} xs={9} sm={5} md={3}>
-            <EventCard inputEvent={mEvent} userEvents={userContext.userEvents}/>
-          </Grid>
-        ))}
-      </Grid>
-    </>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{p: 3}}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    'id': `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
+
+export default function UserHomePage() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Box
+      sx={{
+        flexGrow: 1,
+        bgcolor: 'background.default',
+        display: 'flex',
+        height: '100vh',
+        width: '100vw'}}
+    >
+      <Stack sx={{display: 'flex'}}>
+        <IconButton
+          aria-label="fingerprint"
+          color="success"
+          sx={{mt: 2, mb: 4}}>
+          <img src='/images/swager-logo-dark.svg' width='140px'/>
+        </IconButton>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          indicatorColor='primary'
+          textColor='primary'
+          sx={{borderRight: 1, borderColor: 'divider'}}
+        >
+          <Tab label="Active Events" {...a11yProps(0)} />
+          <Tab label="Past Events" {...a11yProps(1)} />
+          <Tab label="My Events" {...a11yProps(2)} />
+        </Tabs>
+        <Box sx={{flexGrow: 1}}/>
+        <Typography
+          color='primary'
+          sx={{mb: 3}}
+          align='center'>Ⓒ Swager</Typography>
+      </Stack>
+      <Stack sx={{flexGrow: 1}}>
+        <Box
+          sx={{height: '13vh', alignItems: 'center', pr: 4}}
+          display='flex'
+          flexDirection='row-reverse'>
+          <WalletConnection />
+        </Box>
+        <Paper sx={{
+          flexGrow: 1,
+          backgroundColor: '#e4fafb',
+          height: '87vh',
+          overflow: 'auto',
+        }} elevation={3} >
+          <TabPanel value={value} index={0}>
+            <EventsGrid type='active'/>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <EventsGrid type='past'/>
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <EventsGrid type='my'/>
+          </TabPanel>
+        </Paper>
+      </Stack>
+    </Box>
   );
 }
