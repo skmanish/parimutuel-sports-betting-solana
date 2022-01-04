@@ -19,7 +19,6 @@ import UserHomePage from './pages/user-home';
 import {ThemeProvider} from '@mui/material/styles';
 import theme from './theme';
 import {UserContextProvider} from './context/user-context';
-import {userApi} from './api/userApi';
 
 const wallets = [getPhantomWallet()];
 
@@ -50,7 +49,7 @@ const AppWithProvider = () => (
       endpoint={process.env.REACT_APP_BLOCKCHAIN_URL as string}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
-          <UserContextProvider updateUserEvents={userApi.getMyEvents}>
+          <UserContextProvider>
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<App />} />

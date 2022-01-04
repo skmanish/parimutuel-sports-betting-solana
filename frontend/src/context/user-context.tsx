@@ -1,15 +1,15 @@
 import {useWallet} from '@solana/wallet-adapter-react';
 import {useState, createContext} from 'react';
-import {defaultUser, User} from '../types/user';
+import {userApi} from '../api/userApi';
+import {defaultUser, User, UserEvent} from '../types/user';
 
 export const UserContext = createContext({
   ...defaultUser,
-  updateUserEvents: (user: User) => null,
+  updateUserEvents: async () => false,
 });
 
 interface Props {
   children?: any
-  updateUserEvents: (user: User) => any
 }
 
 // userEvents value passed down by this provider are only updated
@@ -17,6 +17,20 @@ interface Props {
 export const UserContextProvider = (props: Props) => {
   const wallet = useWallet();
   const [user, setUser] = useState<User>(defaultUser);
+
+  const updateUserEvents = async () => {
+    if (!user.userPublicKeyBase58) return false;
+    const response = await userApi.getMyEvents(user);
+    if (JSON.stringify(
+      response as UserEvent[]) != JSON.stringify(user.userEvents)) {
+      setUser({
+        ...user,
+        userEvents: response as UserEvent[],
+      });
+      return true;
+    }
+    return false;
+  };
 
   const getProviderValue = async () => {
     if (
@@ -27,21 +41,22 @@ export const UserContextProvider = (props: Props) => {
         userPublicKeyBase58: wallet.publicKey?.toBase58() as string,
         userEvents: user.userEvents,
       };
+      const response = await userApi.getMyEvents(newUser);
       setUser({
         ...newUser,
-        userEvents: await props.updateUserEvents(newUser),
+        userEvents: await response as UserEvent[],
       });
     }
     return {
       ...user,
-      updateUserEvents: props.updateUserEvents,
+      updateUserEvents: updateUserEvents,
     };
   };
   const getProviderValueSync = () => {
     getProviderValue();
     return {
       ...user,
-      updateUserEvents: props.updateUserEvents,
+      updateUserEvents: updateUserEvents,
     };
   };
   return (
