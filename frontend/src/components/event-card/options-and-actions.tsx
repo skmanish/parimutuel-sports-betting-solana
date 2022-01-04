@@ -14,7 +14,7 @@ import {
 import LinearProgressWithLabel from './progress-with-label';
 import {userApi} from '../../api/userApi';
 import {useWallet} from '@solana/wallet-adapter-react';
-import {eventsApi} from '../../api';
+import {eventsApi} from '../../api/eventsApi';
 import {useState} from 'react';
 
 export default function EventCardOptionsAndActions(

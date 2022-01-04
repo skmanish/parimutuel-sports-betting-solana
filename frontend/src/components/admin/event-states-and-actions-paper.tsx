@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import {EventMetadata, EventState} from '../../types/event';
 import {useState} from 'react';
 import {useWallet} from '@solana/wallet-adapter-react';
-import {eventsApi} from '../../api';
+import {eventsApi} from '../../api/eventsApi';
 
 const Item = styled(Paper)(({theme}) => ({
   ...theme.typography.body2,

@@ -11,7 +11,7 @@ import {
 import {useWallet} from '@solana/wallet-adapter-react';
 import React, {useState} from 'react';
 import {EventMetadata} from '../../types/event';
-import {eventsApi} from '../../api';
+import {eventsApi} from '../../api/eventsApi';
 import EventCardOptionsAndActions from './options-and-actions';
 
 export default function EventCard(props: {inputEvent: EventMetadata}) {

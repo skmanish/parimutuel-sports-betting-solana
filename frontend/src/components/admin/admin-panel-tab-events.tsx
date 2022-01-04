@@ -12,7 +12,7 @@ import * as React from 'react';
 import {EventMetadata} from '../../types/event';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {eventsApi} from '../../api';
+import {eventsApi} from '../../api/eventsApi';
 import EventStatesAndActionsBox from './event-states-and-actions-paper';
 
 function Row(props: { event: EventMetadata }) {

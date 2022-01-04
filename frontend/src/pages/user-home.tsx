@@ -4,7 +4,7 @@ import {useState} from 'react';
 import EventCard from '../components/event-card/container';
 import ResponsiveAppBar from '../components/responsive-appbar';
 import {EventMetadata} from '../types/event';
-import {eventsApi} from '../api';
+import {eventsApi} from '../api/eventsApi';
 import Grid from '@mui/material/Grid';
 
 export default function UserHomePage(props: any) {

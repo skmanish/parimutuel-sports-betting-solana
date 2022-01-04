@@ -15,7 +15,7 @@ import {
   isDateLateEnough} from '../../utils';
 import {EventMetadata, isOptionSequenceValid} from '../../types/event';
 import {useWallet} from '@solana/wallet-adapter-react';
-import {eventsApi} from '../../api';
+import {eventsApi} from '../../api/eventsApi';
 
 const validateValues = (values: EventMetadata) => {
   const errors: Partial<EventMetadata> = {};
