@@ -3,8 +3,10 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import CreateEventForm from './admin-panel-tab-create-event';
 import EventsTable from './admin-panel-tab-events';
+import {WalletConnection} from '../connection';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,13 +47,16 @@ export default function AdminPanelTabs() {
   return (
     <Box sx={{width: '100%'}}>
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example">
-          <Tab label="All Events" {...a11yProps(0)} />
-          <Tab label="Create event" {...a11yProps(1)} />
-        </Tabs>
+        <Stack direction='row' sx={{alignItems: 'center'}}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example">
+            <Tab label="All Events" {...a11yProps(0)} />
+            <Tab label="Create event" {...a11yProps(1)} />
+          </Tabs>
+          <WalletConnection />
+        </Stack>
       </Box>
       <TabPanel value={value} index={0}>
         <EventsTable />

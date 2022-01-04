@@ -55,7 +55,6 @@ export default function EventsTable() {
   const getAllEvents = async () => {
     const events = await eventsApi.getAllEvents();
     setEvents(events);
-    console.log(events);
   };
   React.useEffect(() => {
     getAllEvents();

@@ -1,20 +1,22 @@
+/* eslint-disable require-jsdoc */
 import {
   fetchEvent,
   getTotalWinningsForUserInSol,
-} from '../solana/program';
-import {registerUserBetOnEventAccount} from '../solana/program';
+  registerUserBetOnEventAccount,
+} from './solana/program';
 import {
   getAdminCreateUpdateKeyPairFromDb,
   getVaultKeyPairFromDb,
   transferSolToAccount,
-} from '../solana/solana';
+} from './solana/solana';
 import {
   LAMPORTS_PER_SOL,
   PublicKey,
   Keypair,
 } from '@solana/web3.js';
 
-/* eslint-disable require-jsdoc */
+const usersDb = process.env.USERS_DB;
+
 class UserApis {
   db: any;
   constructor(firestoreDatabase) {
@@ -29,7 +31,7 @@ class UserApis {
       return;
     }
     const participatedEvents = await this.db.collection(
-        'users').doc(req.body.publicKeyInBase58).get();
+        usersDb).doc(req.body.publicKeyInBase58).get();
     if (!participatedEvents.exists) {
       res.status(200).send({events: []});
     } else {
@@ -41,7 +43,7 @@ class UserApis {
   // Expected input {publicKeyInBase58: x, eventId: string}
   async myBetInThisEvent(req, res) {
     const participatedEvents = await this.db.collection(
-        'users').doc(req.body.publicKeyInBase58).get();
+        usersDb).doc(req.body.publicKeyInBase58).get();
     if (participatedEvents.exists) {
       const mEvent = participatedEvents.data().events.filter(
           (x)=>x.eventId == req.body.eventId);
@@ -76,7 +78,7 @@ class UserApis {
        }
     */
     const participatedEvents = await this.db.collection(
-        'users').doc(req.body.publicKeyInBase58).get();
+        usersDb).doc(req.body.publicKeyInBase58).get();
     if (
       participatedEvents.exists &&
       participatedEvents.data().events.map((x)=>x.eventId).includes(
@@ -95,7 +97,7 @@ class UserApis {
       updatedParticipatedEvents = participatedEvents.data().events.concat(
           updatedParticipatedEvents);
     }
-    await this.db.collection('users').doc(req.body.publicKeyInBase58).set(
+    await this.db.collection(usersDb).doc(req.body.publicKeyInBase58).set(
         {'events': updatedParticipatedEvents});
     const truthValue = await registerUserBetOnEventAccount(
         await getAdminCreateUpdateKeyPairFromDb(this.db),
@@ -121,7 +123,7 @@ class UserApis {
   async redeemBet(req, res) {
     // Step 1: Check if participated/redeemed already, or event resolved.
     const participatedEvents = await this.db.collection(
-        'users').doc(req.body.publicKeyInBase58).get();
+        usersDb).doc(req.body.publicKeyInBase58).get();
     if (!participatedEvents.exists) {
       res.status(500).send('You have not participated in this event');
       return;
@@ -169,7 +171,7 @@ class UserApis {
       winningsSolCents: userWinningsInSol*100,
       winningsSignature: txSignature,
     };
-    await this.db.collection('users').doc(req.body.publicKeyInBase58).set(
+    await this.db.collection(usersDb).doc(req.body.publicKeyInBase58).set(
         {'events': allParticipatedEvents});
     res.status(200).send(userWinningsInSol+'');
     return;

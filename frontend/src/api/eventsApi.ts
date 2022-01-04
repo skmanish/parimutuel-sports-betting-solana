@@ -17,7 +17,7 @@ class eventsApi {
   ): Promise<string> => {
     const updatedEvent = await createEventAccount(event, wallet);
     await axios.post('/api/events/create', updatedEvent).then((response) => {
-      console.log(response.data);
+      console.log('Created event');
     });
     return 'success';
   };

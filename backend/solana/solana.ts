@@ -9,8 +9,9 @@ import {
 import bs58 from 'bs58';
 import {Wallet} from '@project-serum/anchor';
 
+const walletsDb = process.env.WALLETS_DB;
 const getAdminCreateUpdateKeyPairFromDb = async (db) => {
-  const keypair = await db.collection('wallets').doc(
+  const keypair = await db.collection(walletsDb).doc(
       'admin-for-create-update-eventaccount').get();
   if (keypair.exists &&
     'privateKey' in keypair.data() &&
@@ -23,7 +24,7 @@ const getAdminCreateUpdateKeyPairFromDb = async (db) => {
 };
 
 const getVaultKeyPairFromDb = async (db, vaultPublicKey) => {
-  const snapshot = await db.collection('wallets').where(
+  const snapshot = await db.collection(walletsDb).where(
       'publicKey', '==', vaultPublicKey).limit(1).get();
   if (snapshot.empty) {
     console.log('Keypair not found for vault', vaultPublicKey);

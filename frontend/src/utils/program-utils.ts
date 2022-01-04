@@ -33,7 +33,6 @@ const createEventAccount = async (
   const provider = await getProvider(wallet);
   const program = new Program(idl as Idl, programID, provider);
   const eventAccount = web3.Keypair.generate();
-
   try {
     await program.rpc.initializeEvent(
         provider.wallet.publicKey,
@@ -49,7 +48,6 @@ const createEventAccount = async (
     );
     const fetchedEventAccount = await program.account.eventAccount.fetch(
         eventAccount.publicKey) as FetchedEventAccountType;
-    console.log(fetchedEventAccount);
     event = populateEventMetadataWithFetchedAccount(event, fetchedEventAccount);
     event.eventAccountPublicKeyBase58 = eventAccount.publicKey.toBase58();
     event.eventAccountSecretKeyByteArray = new TextDecoder().decode(
@@ -79,7 +77,6 @@ const setEventStarted = async (event: EventMetadata, wallet: Wallet) => {
     );
     const fetchedEventAccount = await program.account.eventAccount.fetch(
         eventAccountPubkey) as FetchedEventAccountType;
-    console.log(fetchedEventAccount);
     event = populateEventMetadataWithFetchedAccount(event, fetchedEventAccount);
     return event;
   } catch (err) {

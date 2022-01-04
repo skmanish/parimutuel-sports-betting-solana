@@ -43,6 +43,10 @@ export default function EventCardOptionsAndActions(
   };
 
   const placeBet = async (chosenOption: number) => {
+    if (!wallet.publicKey) {
+      console.log('Please connect to wallet');
+      return;
+    }
     // @ts-ignore
     const apiResponse = await userApi.placeBet(event, wallet,
         5e8, chosenOption);

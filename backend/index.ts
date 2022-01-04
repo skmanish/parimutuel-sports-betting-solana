@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+dotenv.config({path: `.env.${process.env.NODE_ENV}`});
+
 import {
   initializeApp,
   cert,
@@ -10,10 +12,8 @@ import {
   getFirestore,
 } from 'firebase-admin/firestore';
 import serviceAccount from '../strut-336918-eeb8eca850d9.json';
-import UserApis from './user/user';
-import {getVaultKeyPairFromDb} from './solana/solana';
+import UserApis from './user';
 
-dotenv.config();
 initializeApp({
   credential: cert(serviceAccount as ServiceAccount),
 });
@@ -27,11 +27,15 @@ app.use(bodyParser.urlencoded({
 }));
 
 const db = getFirestore();
-const eventsDb = db.collection('events');
+const eventsDb = db.collection(process.env.EVENTS_DB);
 
 app.post('/api/events/create', async (req, res) => {
-  await eventsDb.doc(req.body.eventAccountPublicKeyBase58).set(req.body);
-  res.json({message: 'success'});
+  if (!req.body.eventAccountPublicKeyBase58) {
+    res.status(500).send('event account\'s public key is undefined');
+  } else {
+    await eventsDb.doc(req.body.eventAccountPublicKeyBase58).set(req.body);
+    res.json({message: 'success'});
+  }
 });
 
 app.post('/api/events/update', async (req, res) => {
@@ -41,12 +45,16 @@ app.post('/api/events/update', async (req, res) => {
 
 app.get('/api/events', async (req, res) => {
   const snapshot = await eventsDb.get();
-  const events = snapshot.docs.map((doc, index) => {
+  let events = snapshot.docs.map((doc, index) => {
     return {
       id: doc.id,
       ...doc.data(),
     };
   });
+  // Remove empty doc (if any).
+  // Atleast one doc is required for a collection.
+  events = events.filter((x)=>'eventAuthorityPublicKeyBase58' in x);
+
   res.json(events);
 });
 
@@ -57,13 +65,7 @@ app.get('/api/user/event', userApis.myBetInThisEvent.bind(userApis));
 app.post('/api/user/placebet', userApis.placeBet.bind(userApis));
 app.post('/api/user/redeembet', userApis.redeemBet.bind(userApis));
 
-getVaultKeyPairFromDb(
-    db, '8egkR22bSvgYz7Ngf8sbWb8xDsmUMLJtrJXv81FDJXbK');
-
-app.get('/api', (req, res) => {
-  res.json({message: 'Hello from server!'});
-});
-console.log(process.env.BLOCKCHAIN_URL);
+console.log('BLOCKCHAIN_URL', process.env.BLOCKCHAIN_URL);
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
