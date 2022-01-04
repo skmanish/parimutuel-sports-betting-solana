@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import {EventMetadata, EventState} from '../types/event';
-import {User} from '../types/user';
+import {User, UserEvent} from '../types/user';
 import {ApiResponse} from '../types/api-response';
 import {sendLamports} from '../utils/anchor-utils';
 import {Wallet} from '@project-serum/anchor';
@@ -15,11 +15,23 @@ class userApi {
     ): ApiResponse => {
       if (event.eventState != EventState.STARTED) {
         return {error: 'Event is not in started state'};
-      } else if (user.userEvents && event.eventAccountPublicKeyBase58 &&
-        user.userEvents.indexOf(event.eventAccountPublicKeyBase58) > -1) {
-        return {error: 'Already participated'};
+      } else if (user.userEvents && event.eventAccountPublicKeyBase58) {
+        const participatedEventIds = user.userEvents.map((x)=>x.eventId);
+        if (participatedEventIds.indexOf(
+            event.eventAccountPublicKeyBase58) > -1) {
+          return {error: 'Already participated'};
+        }
       }
       return {success: true};
+    }
+
+    static getMyEvents = async (user: User) => {
+      if (!user.userPublicKeyBase58) return [] as UserEvent[];
+      const response = await axios.post(
+          '/api/user/events',
+          {publicKeyInBase58: user.userPublicKeyBase58},
+      );
+      return response.data.events as UserEvent[];
     }
 
     static placeBet = async (

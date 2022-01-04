@@ -6,7 +6,7 @@ import {
 } from '@solana/web3.js';
 import {Provider, Wallet, Program, Idl} from '@project-serum/anchor';
 import idl from '../idl.json';
-import { getAdminCreateUpdateKeyPairFromDb } from './solana';
+import {getAdminCreateUpdateKeyPairFromDb} from './solana';
 
 const programID = new PublicKey(idl.metadata.address);
 

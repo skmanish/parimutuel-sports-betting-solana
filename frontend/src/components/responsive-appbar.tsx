@@ -8,14 +8,12 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import {useWallet} from '@solana/wallet-adapter-react';
+import {WalletConnection} from './connection';
 
 const pages = ['Active', 'Upcoming', 'Past'];
 
 const ResponsiveAppBar = () => {
-  const wallet = useWallet();
   const [anchorElNav,
     setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
@@ -97,14 +95,7 @@ const ResponsiveAppBar = () => {
           </Box>
 
           <Box sx={{flexGrow: 0}}>
-            <Tooltip title="Wallet address">
-              <Typography>
-                {wallet.publicKey?.toBase58().substring(0, 5) +
-                '...' + wallet.publicKey?.toBase58().substring(
-                    wallet.publicKey?.toBase58().length-5,
-                    wallet.publicKey?.toBase58().length)}
-              </Typography>
-            </Tooltip>
+            <WalletConnection />
           </Box>
         </Toolbar>
       </Container>

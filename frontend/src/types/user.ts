@@ -1,10 +1,17 @@
-import {PublicKey} from '@solana/web3.js';
-
+export type UserEvent = {
+    eventId?: string,
+    transactionSignature?: string,
+    userChoice?: number,
+    userSolCents?: number,
+    winningsSolCents?: number,
+    winningsSignature?: string,
+}
 export type User = {
-    userPublicKey?: PublicKey,
+    userPublicKeyBase58: string,
+    userEvents: UserEvent[],
+};
 
-    // Base58 encoded PublicKey of all events the user has participated in.
-    userEvents?: string[],
-    // Base58 encoded PublicKey of all events the user has redeemed.
-    userEventsRedeemed?: string[],
+export const defaultUser = {
+  userPublicKeyBase58: '',
+  userEvents: [] as UserEvent[],
 };

@@ -15,7 +15,9 @@ import LinearProgressWithLabel from './progress-with-label';
 import {userApi} from '../../api/userApi';
 import {useWallet} from '@solana/wallet-adapter-react';
 import {eventsApi} from '../../api/eventsApi';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
+import {UserContext} from '../../context/user-context';
+import {User} from '../../types/user';
 
 export default function EventCardOptionsAndActions(
     props: {event: EventMetadata},
@@ -25,7 +27,8 @@ export default function EventCardOptionsAndActions(
   const validOptionsText: string[] = getValidOptions(event);
   const validOptionsPercentageStakes: number[
   ] = getValidOptionsPercentageStakes(event);
-  const bettable = userApi.canIBetInAnEvent(event, {});
+  const userContext = useContext(UserContext);
+  const bettable = userApi.canIBetInAnEvent(event, userContext as User);
   const placeBet = async (chosenOption: number) => {
     // @ts-ignore
     const apiResponse = await userApi.placeBet(event, wallet,

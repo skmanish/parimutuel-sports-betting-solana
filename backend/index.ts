@@ -51,8 +51,7 @@ app.get('/api/events', async (req, res) => {
 
 /* User APIs */
 const userApis = new UserApis(db);
-// Returns a list of events that user has participated/bet in.
-app.get('/api/user/events', userApis.myevents.bind(userApis));
+app.post('/api/user/events', userApis.getMyEvents.bind(userApis));
 app.get('/api/user/event', userApis.myBetInThisEvent.bind(userApis));
 app.post('/api/user/placebet', userApis.placeBet.bind(userApis));
 // app.get('/api/user/redeembet', userApis.redeemBet);

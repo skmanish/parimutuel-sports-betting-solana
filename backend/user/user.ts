@@ -8,15 +8,20 @@ class UserApis {
     this.db = firestoreDatabase;
   }
 
-  // GET /api/user/events.
+  // POST /api/user/events.
   // Expected input {publicKeyInBase58: x}
-  async myevents(req, res) {
-    const userPubkey = req.body.publicKeyInBase58;
-    const participatedEventIds = await this.db.collection(
-        'users').doc(userPubkey);
+  async getMyEvents(req, res) {
+    if (!req.body.publicKeyInBase58) {
+      res.status(500).send({'error': 'Empty param: `publicKeyInBase58`'});
+      return;
+    }
     const participatedEvents = await this.db.collection(
-        'events').where('id', 'in', participatedEventIds.ids).get();
-    res.send(participatedEvents);
+        'users').doc(req.body.publicKeyInBase58).get();
+    if (!participatedEvents.exists) {
+      res.status(200).send({events: []});
+    } else {
+      res.status(200).send(participatedEvents.data());
+    }
   }
 
   // GET /api/user/event
