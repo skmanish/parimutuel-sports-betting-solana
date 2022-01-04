@@ -15,20 +15,27 @@ import LinearProgressWithLabel from './progress-with-label';
 import {userApi} from '../../api/userApi';
 import {useWallet} from '@solana/wallet-adapter-react';
 import {eventsApi} from '../../api/eventsApi';
-import {useContext, useState} from 'react';
-import {UserContext} from '../../context/user-context';
-import {User} from '../../types/user';
+import {useState} from 'react';
+import {UserEvent} from '../../types/user';
 
 export default function EventCardOptionsAndActions(
-    props: {event: EventMetadata},
+    props: {event: EventMetadata, userEvents: UserEvent[]},
 ) {
   const wallet = useWallet();
   const [event, setEvent] = useState<EventMetadata>(props.event);
   const validOptionsText: string[] = getValidOptions(event);
   const validOptionsPercentageStakes: number[
   ] = getValidOptionsPercentageStakes(event);
-  const userContext = useContext(UserContext);
-  const bettable = userApi.canIBetInAnEvent(event, userContext as User);
+  const bettable = userApi.canIBetInAnEvent(event, props.userEvents);
+  const [chosenOption, chosenSolCents] = userApi.myBetInAnEvent(
+      event, props.userEvents);
+
+  const getButtonTextBasedOnIndex = (index: number) => {
+    if (chosenSolCents == -1) return 'Bet 0.5 SOL';
+    if (chosenOption == index) return 'Staked 0.5 SOL';
+    return 'No stakes';
+  };
+
   const placeBet = async (chosenOption: number) => {
     // @ts-ignore
     const apiResponse = await userApi.placeBet(event, wallet,
@@ -68,8 +75,9 @@ export default function EventCardOptionsAndActions(
                 placeBet(index);
               }}
               disabled={'error' in bettable}
-              sx={{fontSize: '10px', width: '50%'}}
-            >Bet 0.5 SOL</Button>
+              sx={{fontSize: '10px', width: '50%'}}>
+              {getButtonTextBasedOnIndex(index)}
+            </Button>
           </Stack>
           <Divider light style={{width: '100%'}}/>
         </div>

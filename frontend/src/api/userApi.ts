@@ -11,12 +11,12 @@ class userApi {
     // Assumes that event is updated already.
     static canIBetInAnEvent = (
         event: EventMetadata,
-        user: User,
+        userEvents: UserEvent[],
     ): ApiResponse => {
       if (event.eventState != EventState.STARTED) {
         return {error: 'Event is not in started state'};
-      } else if (user.userEvents && event.eventAccountPublicKeyBase58) {
-        const participatedEventIds = user.userEvents.map((x)=>x.eventId);
+      } else if (userEvents && event.eventAccountPublicKeyBase58) {
+        const participatedEventIds = userEvents.map((x)=>x.eventId);
         if (participatedEventIds.indexOf(
             event.eventAccountPublicKeyBase58) > -1) {
           return {error: 'Already participated'};
@@ -24,6 +24,20 @@ class userApi {
       }
       return {success: true};
     }
+
+    static myBetInAnEvent(
+        event: EventMetadata,
+        userEvents: UserEvent[]): [number, number] {
+      for (let i = 0; i < userEvents.length; i++) {
+        if (userEvents[i].eventId == event.eventAccountPublicKeyBase58) {
+          return [
+            userEvents[i].userChoice as number,
+            userEvents[i].userSolCents as number,
+          ];
+        }
+      }
+      return [-1, -1];
+    };
 
     static getMyEvents = async (user: User) => {
       if (!user.userPublicKeyBase58) return [] as UserEvent[];

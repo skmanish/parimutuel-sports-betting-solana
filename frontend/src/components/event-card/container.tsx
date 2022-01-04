@@ -13,9 +13,13 @@ import React, {useState} from 'react';
 import {EventMetadata} from '../../types/event';
 import {eventsApi} from '../../api/eventsApi';
 import EventCardOptionsAndActions from './options-and-actions';
+import {UserEvent} from '../../types/user';
 
-export default function EventCard(props: {inputEvent: EventMetadata}) {
-  const {inputEvent} = props;
+export default function EventCard(props: {
+  inputEvent: EventMetadata,
+  userEvents: UserEvent[],
+}) {
+  const {inputEvent, userEvents} = props;
   const [event, setEvent] = useState(inputEvent);
   const wallet = useWallet();
   React.useEffect(() => {
@@ -52,7 +56,7 @@ export default function EventCard(props: {inputEvent: EventMetadata}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <EventCardOptionsAndActions event={event}/>
+        <EventCardOptionsAndActions event={event} userEvents={userEvents}/>
       </CardActions>
     </Card>
   );
