@@ -42,7 +42,7 @@ target
 node_modules
 test-ledger
 
-.env
-frontend/.env
+.env*
+frontend/.env*
 strut-*.json
 frontend/src/idl.json

@@ -31,7 +31,7 @@ const registerUserBetOnEventAccount = async (
   const provider = await getProvider(wallet);
   const program = new Program(idl as Idl, programID, provider);
   if (userChoice > 4 || userChoice < 0) return false;
-  await program.rpc.addUserBetToEvent(1, userBetInSolCents, {
+  await program.rpc.addUserBetToEvent(userChoice, userBetInSolCents, {
     accounts: {
       eventAccount: new PublicKey(eventAccountPublicKeyBase58),
       authority: provider.wallet.publicKey,
@@ -79,6 +79,7 @@ const getTotalWinningsForUserInSol = (
   } else if (eventAccount.correctOptionNumber == 4) {
     correctOptionSolCents = eventAccount.option5BalanceCents;
   }
+  if (correctOptionSolCents == 0) return 0;
   return userSolCents*totalSolCents*0.0099/correctOptionSolCents;
 };
 

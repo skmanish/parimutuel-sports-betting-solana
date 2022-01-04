@@ -42,8 +42,7 @@ async function sendLamports(
       }),
   );
   transaction.feePayer = wallet.publicKey;
-  const transactionSignature = provider.send(transaction);
-  console.log('Inside anchor-utils: ', transactionSignature);
+  const transactionSignature = await provider.send(transaction);
   return transactionSignature;
 }
 
