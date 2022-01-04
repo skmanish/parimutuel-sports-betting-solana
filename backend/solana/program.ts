@@ -47,7 +47,6 @@ const fetchEvent = async (eventId: string, db: any) => {
   try {
     const fetchedEventAccount = await program.account.eventAccount.fetch(
         new PublicKey(eventId));
-    console.log(fetchedEventAccount);
     return fetchedEventAccount;
   } catch (err) {
     console.log(err);
@@ -80,7 +79,7 @@ const getTotalWinningsForUserInSol = (
   } else if (eventAccount.correctOptionNumber == 4) {
     correctOptionSolCents = eventAccount.option5BalanceCents;
   }
-  return userSolCents*totalSolCents*99/correctOptionSolCents;
+  return userSolCents*totalSolCents*0.0099/correctOptionSolCents;
 };
 
 export {

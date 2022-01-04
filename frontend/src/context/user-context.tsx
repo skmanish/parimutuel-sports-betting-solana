@@ -17,6 +17,7 @@ interface Props {
 export const UserContextProvider = (props: Props) => {
   const wallet = useWallet();
   const [user, setUser] = useState<User>(defaultUser);
+  console.log('UserContextProvider refreshing');
 
   const updateUserEvents = async () => {
     if (!user.userPublicKeyBase58) return false;

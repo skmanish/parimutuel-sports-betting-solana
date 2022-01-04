@@ -115,6 +115,7 @@ class UserApis {
       Expected input {
         publicKeyInBase58: string,
         eventId: string,
+        vaultPublicKeyBase58: string,
       }
   */
   async redeemBet(req, res) {
@@ -130,8 +131,8 @@ class UserApis {
       res.status(500).send('You have not participated in this event');
       return;
     }
-    const userEvent = participatedEvents.data().events.indexOf(
-        req.body.eventId);
+    const userEvent = participatedEvents.data().events[
+        eventIds.indexOf(req.body.eventId)];
     if (userEvent.winningsSignature || userEvent.winningsSolCents) {
       res.status(500).send('You have already redeemed');
       return;
@@ -151,25 +152,26 @@ class UserApis {
         userEvent.userSolCents,
     );
     const keypair = await getVaultKeyPairFromDb(
-        this.db, req.body.vaultPublicKey);
+        this.db, req.body.vaultPublicKeyBase58);
     if (!keypair) {
       res.status(500).send('Vault keypair is not found');
       return;
     }
-    const txSignature = transferSolToAccount(
+    const txSignature = await transferSolToAccount(
         keypair as Keypair,
         new PublicKey(req.body.publicKeyInBase58),
         userWinningsInSol*LAMPORTS_PER_SOL,
     );
     // Step 3: Store in the DB that SOL has been redeemed.
     const allParticipatedEvents = participatedEvents.data().events;
-    allParticipatedEvents[allParticipatedEvents.indexOf(userEvent)] = {
+    allParticipatedEvents[eventIds.indexOf(req.body.eventId)] = {
       ...userEvent,
       winningsSolCents: userWinningsInSol*100,
       winningsSignature: txSignature,
     };
     await this.db.collection('users').doc(req.body.publicKeyInBase58).set(
         {'events': allParticipatedEvents});
+    res.status(200).send(userWinningsInSol+'');
     return;
   }
 };

@@ -11,6 +11,7 @@ import {UserContext} from '../context/user-context';
 export default function UserHomePage(props: any) {
   const [events, setEvents] = useState<EventMetadata[]>([]);
   const userContext = useContext(UserContext);
+  console.log('In User page', userContext);
   React.useEffect(() => {
     async function myUseEffect() {
       // @ts-ignore

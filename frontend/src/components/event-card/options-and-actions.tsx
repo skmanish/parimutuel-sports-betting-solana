@@ -15,20 +15,26 @@ import LinearProgressWithLabel from './progress-with-label';
 import {userApi} from '../../api/userApi';
 import {useWallet} from '@solana/wallet-adapter-react';
 import {eventsApi} from '../../api/eventsApi';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {UserEvent} from '../../types/user';
+import {UserContext} from '../../context/user-context';
 
 export default function EventCardOptionsAndActions(
     props: {event: EventMetadata, userEvents: UserEvent[]},
 ) {
   const wallet = useWallet();
+  // TODO: Keep either userContext or userEvents.
+  const userContext = useContext(UserContext);
   const [event, setEvent] = useState<EventMetadata>(props.event);
   const validOptionsText: string[] = getValidOptions(event);
   const validOptionsPercentageStakes: number[
   ] = getValidOptionsPercentageStakes(event);
   const bettable = userApi.canIBetInAnEvent(event, props.userEvents);
-  const [chosenOption, chosenSolCents] = userApi.myBetInAnEvent(
-      event, props.userEvents);
+  const [
+    chosenOption,
+    chosenSolCents,
+    winningsSolCents] = userApi.myBetInAnEvent(event, props.userEvents);
+  const [redeeming, setRedeeming] = useState(false);
 
   const getButtonTextBasedOnIndex = (index: number) => {
     if (chosenSolCents == -1) return 'Bet 0.5 SOL';
@@ -45,6 +51,18 @@ export default function EventCardOptionsAndActions(
       const updatedEvent = await eventsApi.updateEvent(event, wallet);
       if (updatedEvent) setEvent(updatedEvent);
     }
+  };
+
+  const redeemWinnings = async () => {
+    setRedeeming(true);
+    await userApi.redeemBet(
+        userContext.userPublicKeyBase58,
+        event.eventAccountPublicKeyBase58 as string,
+        event.eventVaultPubkey as string, (response: any) => {
+          alert('Total winnings: ' + response.data as string);
+        });
+    userContext.updateUserEvents();
+    setRedeeming(false);
   };
   return (
     <Stack spacing={1} sx={{width: '100%'}}>
@@ -82,6 +100,17 @@ export default function EventCardOptionsAndActions(
           <Divider light style={{width: '100%'}}/>
         </div>
       ))}
+      {
+        (event.eventState == 3) &&
+      (chosenOption > -1) &&
+      (winningsSolCents == -1) && (
+          <Button
+            variant="contained"
+            onClick={redeemWinnings}
+            disabled={redeeming}>
+          Redeem
+          </Button>
+        )}
     </Stack>
   );
 };

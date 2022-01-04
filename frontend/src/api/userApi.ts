@@ -27,16 +27,18 @@ class userApi {
 
     static myBetInAnEvent(
         event: EventMetadata,
-        userEvents: UserEvent[]): [number, number] {
+        userEvents: UserEvent[]): [number, number, number] {
       for (let i = 0; i < userEvents.length; i++) {
         if (userEvents[i].eventId == event.eventAccountPublicKeyBase58) {
           return [
             userEvents[i].userChoice as number,
             userEvents[i].userSolCents as number,
+            ('winningsSolCents' in userEvents[i]) ?
+            userEvents[i].winningsSolCents as number : -1,
           ];
         }
       }
-      return [-1, -1];
+      return [-1, -1, -1];
     };
 
     static getMyEvents = async (user: User) => {
@@ -76,6 +78,25 @@ class userApi {
           return {error: error} as ApiResponse;
         });
       }
+    }
+    static redeemBet = async (
+        userPublicKeyBase58: string,
+        eventId: string,
+        vaultPublicKeyBase58: string,
+        successCallback: any,
+    ) => {
+      await axios.post(
+          '/api/user/redeembet',
+          {
+            publicKeyInBase58: userPublicKeyBase58,
+            eventId: eventId,
+            vaultPublicKeyBase58: vaultPublicKeyBase58,
+          },
+      ).then((response) => {
+        successCallback(response);
+      }).catch((error) => {
+        console.log(error);
+      });
     }
 }
 export {userApi};

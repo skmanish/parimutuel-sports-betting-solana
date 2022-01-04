@@ -30,8 +30,8 @@ const getVaultKeyPairFromDb = async (db, vaultPublicKey) => {
   } else {
     const keypair = snapshot.docs[0].data();
     return new Keypair({
-      publicKey: keypair.publicKey,
-      secretKey: keypair.privateKey,
+      publicKey: bs58.decode(keypair.publicKey),
+      secretKey: bs58.decode(keypair.privateKey),
     });
   }
 };
