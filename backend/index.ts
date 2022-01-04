@@ -11,6 +11,7 @@ import {
 } from 'firebase-admin/firestore';
 import serviceAccount from '../strut-336918-eeb8eca850d9.json';
 import UserApis from './user/user';
+import {getVaultKeyPairFromDb} from './solana/solana';
 
 dotenv.config();
 initializeApp({
@@ -54,7 +55,10 @@ const userApis = new UserApis(db);
 app.post('/api/user/events', userApis.getMyEvents.bind(userApis));
 app.get('/api/user/event', userApis.myBetInThisEvent.bind(userApis));
 app.post('/api/user/placebet', userApis.placeBet.bind(userApis));
-app.get('/api/user/redeembet', userApis.redeemBet.bind(userApis));
+app.post('/api/user/redeembet', userApis.redeemBet.bind(userApis));
+
+getVaultKeyPairFromDb(
+    db, '8egkR22bSvgYz7Ngf8sbWb8xDsmUMLJtrJXv81FDJXbK');
 
 app.get('/api', (req, res) => {
   res.json({message: 'Hello from server!'});

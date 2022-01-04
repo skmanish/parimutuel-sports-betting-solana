@@ -22,6 +22,20 @@ const getAdminCreateUpdateKeyPairFromDb = async (db) => {
   };
 };
 
+const getVaultKeyPairFromDb = async (db, vaultPublicKey) => {
+  const snapshot = await db.collection('wallets').where(
+      'publicKey', '==', vaultPublicKey).limit(1).get();
+  if (snapshot.empty) {
+    console.log('Keypair not found for vault', vaultPublicKey);
+  } else {
+    const keypair = snapshot.docs[0].data();
+    return new Keypair({
+      publicKey: keypair.publicKey,
+      secretKey: keypair.privateKey,
+    });
+  }
+};
+
 const transferSolToAccount = async (
     fromKeypair: Keypair,
     destinationPublicKey: PublicKey,
@@ -50,4 +64,5 @@ export {
   transferSolToAccount,
   inspectTransaction,
   getAdminCreateUpdateKeyPairFromDb,
+  getVaultKeyPairFromDb,
 };

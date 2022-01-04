@@ -25,7 +25,7 @@ async function getProvider(wallet: Wallet) {
 const registerUserBetOnEventAccount = async (
     wallet: Wallet,
     eventAccountPublicKeyBase58: string,
-    userChoice: number,
+    userChoice: number, // 0-indexed.
     userBetInSolCents: number,
 ) => {
   const provider = await getProvider(wallet);
@@ -54,4 +54,37 @@ const fetchEvent = async (eventId: string, db: any) => {
   }
 };
 
-export {registerUserBetOnEventAccount, fetchEvent};
+const getTotalWinningsForUserInSol = (
+    eventAccount: any,
+    userChoice: number,
+    userSolCents: number,
+) => {
+  const totalSolCents = (
+    eventAccount.option1BalanceCents +
+    eventAccount.option2BalanceCents +
+    eventAccount.option3BalanceCents +
+    eventAccount.option4BalanceCents +
+    eventAccount.option5BalanceCents
+  );
+  if (userChoice != eventAccount.correctOptionNumber) return 0;
+
+  let correctOptionSolCents = 0;
+  if (eventAccount.correctOptionNumber == 0) {
+    correctOptionSolCents = eventAccount.option1BalanceCents;
+  } else if (eventAccount.correctOptionNumber == 1) {
+    correctOptionSolCents = eventAccount.option2BalanceCents;
+  } else if (eventAccount.correctOptionNumber == 2) {
+    correctOptionSolCents = eventAccount.option3BalanceCents;
+  } else if (eventAccount.correctOptionNumber == 3) {
+    correctOptionSolCents = eventAccount.option4BalanceCents;
+  } else if (eventAccount.correctOptionNumber == 4) {
+    correctOptionSolCents = eventAccount.option5BalanceCents;
+  }
+  return userSolCents*totalSolCents*99/correctOptionSolCents;
+};
+
+export {
+  registerUserBetOnEventAccount,
+  fetchEvent,
+  getTotalWinningsForUserInSol,
+};

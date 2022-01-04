@@ -1,5 +1,18 @@
+import {
+  fetchEvent,
+  getTotalWinningsForUserInSol,
+} from '../solana/program';
 import {registerUserBetOnEventAccount} from '../solana/program';
-import {getAdminCreateUpdateKeyPairFromDb} from '../solana/solana';
+import {
+  getAdminCreateUpdateKeyPairFromDb,
+  getVaultKeyPairFromDb,
+  transferSolToAccount,
+} from '../solana/solana';
+import {
+  LAMPORTS_PER_SOL,
+  PublicKey,
+  Keypair,
+} from '@solana/web3.js';
 
 /* eslint-disable require-jsdoc */
 class UserApis {
@@ -39,7 +52,7 @@ class UserApis {
     res.status(500).send({});
   }
 
-  /* GET /api/user/placebet
+  /* POST /api/user/placebet
       Expected input {
         publicKeyInBase58: string,
         transactionSignature: string,
@@ -98,7 +111,66 @@ class UserApis {
       error: 'could not register user bet on the program.'});
   }
 
+  /* POST /api/user/redeembet
+      Expected input {
+        publicKeyInBase58: string,
+        eventId: string,
+      }
+  */
   async redeemBet(req, res) {
+    // Step 1: Check if participated/redeemed already, or event resolved.
+    const participatedEvents = await this.db.collection(
+        'users').doc(req.body.publicKeyInBase58).get();
+    if (!participatedEvents.exists) {
+      res.status(500).send('You have not participated in this event');
+      return;
+    }
+    const eventIds = participatedEvents.data().events.map((x)=>x.eventId);
+    if (!eventIds.includes(req.body.eventId)) {
+      res.status(500).send('You have not participated in this event');
+      return;
+    }
+    const userEvent = participatedEvents.data().events.indexOf(
+        req.body.eventId);
+    if (userEvent.winningsSignature || userEvent.winningsSolCents) {
+      res.status(500).send('You have already redeemed');
+      return;
+    }
+    const eventAccount: any = await fetchEvent(req.body.eventId, this.db);
+    if (
+      eventAccount.state != 3 ||
+      eventAccount.correctOptionNumber > 4 ||
+      eventAccount.correctOptionNumber < 0
+    ) {
+      res.status(500).send('Event has not been properly resolved');
+    }
+    // Step 2: Transfer money from vault account to user.
+    const userWinningsInSol = getTotalWinningsForUserInSol(
+        eventAccount,
+        userEvent.userChoice,
+        userEvent.userSolCents,
+    );
+    const keypair = await getVaultKeyPairFromDb(
+        this.db, req.body.vaultPublicKey);
+    if (!keypair) {
+      res.status(500).send('Vault keypair is not found');
+      return;
+    }
+    const txSignature = transferSolToAccount(
+        keypair as Keypair,
+        new PublicKey(req.body.publicKeyInBase58),
+        userWinningsInSol*LAMPORTS_PER_SOL,
+    );
+    // Step 3: Store in the DB that SOL has been redeemed.
+    const allParticipatedEvents = participatedEvents.data().events;
+    allParticipatedEvents[allParticipatedEvents.indexOf(userEvent)] = {
+      ...userEvent,
+      winningsSolCents: userWinningsInSol*100,
+      winningsSignature: txSignature,
+    };
+    await this.db.collection('users').doc(req.body.publicKeyInBase58).set(
+        {'events': allParticipatedEvents});
+    return;
   }
 };
 export default UserApis;
