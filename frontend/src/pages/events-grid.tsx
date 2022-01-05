@@ -6,15 +6,22 @@ import {EventMetadata} from '../types/event';
 import {eventsApi} from '../api/eventsApi';
 import Grid from '@mui/material/Grid';
 import {UserContext} from '../context/user-context';
+import {filterAndOrderEventsList} from '../utils/event-utils';
 
-export default function EventsGrid(props: {type: 'active'|'past'|'my'}) {
+export default function EventsGrid(
+    props: {type: 'active'|'past'|'future'|'my'},
+) {
   const [events, setEvents] = useState<EventMetadata[]>([]);
   const userContext = useContext(UserContext);
-  console.log('In User page', userContext);
   React.useEffect(() => {
     async function myUseEffect() {
       // @ts-ignore
-      setEvents(await eventsApi.getAllEvents());
+      let list = await eventsApi.getAllEvents();
+      if (list) {
+        list = filterAndOrderEventsList(
+            list, props.type, userContext.userEvents);
+        setEvents(list);
+      }
     }
     myUseEffect();
   }, []);
@@ -27,7 +34,6 @@ export default function EventsGrid(props: {type: 'active'|'past'|'my'}) {
         direction="row"
         alignItems="flex-start"
         justifyContent="space-evenly"
-        sx={{m: 0}}
       >
         {events.map((mEvent, mIndex) => (
           <Grid item key={mIndex} xs={9} sm={5} md={4}>

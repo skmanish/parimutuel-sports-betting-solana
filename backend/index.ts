@@ -31,7 +31,7 @@ const db = getFirestore();
 
 /* Event APIs */
 const eventApis = new EventApis(db);
-app.post('/api/events', eventApis.getEvents.bind(eventApis));
+app.get('/api/events', eventApis.getEvents.bind(eventApis));
 app.post('/api/events/update', eventApis.updateEvent.bind(eventApis));
 app.post('/api/events/create', eventApis.createEvent.bind(eventApis));
 

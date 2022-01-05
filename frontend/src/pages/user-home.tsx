@@ -9,6 +9,7 @@ import {
   IconButton,
   Tab,
   Tabs,
+  Divider,
 } from '@mui/material';
 import {WalletConnection} from '../components/connection';
 import EventsGrid from './events-grid';
@@ -80,8 +81,11 @@ export default function UserHomePage() {
           sx={{borderRight: 1, borderColor: 'divider'}}
         >
           <Tab label="Active Events" {...a11yProps(0)} />
-          <Tab label="Past Events" {...a11yProps(1)} />
-          <Tab label="My Events" {...a11yProps(2)} />
+          <Tab label="Upcoming" {...a11yProps(1)} />
+          <Tab label="Past Events" {...a11yProps(2)} />
+          <Divider light style={{width: '80%'}}
+            sx={{m: 2, borderBottomWidth: 2}}/>
+          <Tab label="My Events" {...a11yProps(4)} />
         </Tabs>
         <Box sx={{flexGrow: 1}}/>
         <Typography
@@ -101,14 +105,18 @@ export default function UserHomePage() {
           backgroundColor: '#e4fafb',
           height: '87vh',
           overflow: 'auto',
+          borderRadius: 5,
         }} elevation={3} >
           <TabPanel value={value} index={0}>
             <EventsGrid type='active'/>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <EventsGrid type='past'/>
+            <EventsGrid type='future'/>
           </TabPanel>
           <TabPanel value={value} index={2}>
+            <EventsGrid type='past'/>
+          </TabPanel>
+          <TabPanel value={value} index={4}>
             <EventsGrid type='my'/>
           </TabPanel>
         </Paper>

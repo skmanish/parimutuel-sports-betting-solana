@@ -6,9 +6,10 @@ class EventApis {
     constructor(firestoreDatabase) {
       this.db = firestoreDatabase;
     }
-
+    // GET /api/events
+    // Expected input {publicKeyInBase58: x, eventId: string}
     async getEvents(req, res) {
-      const snapshot = this.db.collection(eventsDb);
+      const snapshot = await this.db.collection(eventsDb).get();
       let events = snapshot.docs.map((doc, index) => {
         return {
           id: doc.id,
