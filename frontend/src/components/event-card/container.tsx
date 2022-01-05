@@ -47,7 +47,7 @@ export default function EventCard(props: {
           sx={{maxWidth: 'md'}}
         />
       </CardActionArea>
-      <CardContent sx={{p: 1}}>
+      <CardContent sx={{p: 2, pb: 0}}>
         <Typography gutterBottom variant="h5" component="div">
           {event.eventTitle}
         </Typography>

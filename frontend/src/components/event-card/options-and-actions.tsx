@@ -69,7 +69,7 @@ export default function EventCardOptionsAndActions(
     setRedeeming(false);
   };
   return (
-    <Stack spacing={1} sx={{width: '100%'}}>
+    <Stack spacing={1} sx={{width: '100%', p: 1}}>
       <Divider light style={{width: '100%'}}/>
       {validOptionsText.map((option, index)=>(
         <div key={index}>

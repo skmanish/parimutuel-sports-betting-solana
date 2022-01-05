@@ -3,7 +3,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint --fix \"./tests/**/*.{js,jsx,ts,tsx,json}\"",
         "server": "nodemon backend/index.ts",
-        "client": "yarn --cwd frontend/ start",
+        "client": "REACT_APP_BLOCKCHAIN_URL=http://localhost:8899 yarn --cwd frontend/ start",
         "dev": "NODE_ENV=localnet concurrently \"npm run server\" \"npm run client\""
     },
     "dependencies": {

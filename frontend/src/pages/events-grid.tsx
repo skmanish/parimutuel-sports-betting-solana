@@ -30,7 +30,7 @@ export default function EventsGrid(props: {type: 'active'|'past'|'my'}) {
         sx={{m: 0}}
       >
         {events.map((mEvent, mIndex) => (
-          <Grid item key={mIndex} xs={9} sm={5} md={3}>
+          <Grid item key={mIndex} xs={9} sm={5} md={4}>
             <EventCard inputEvent={mEvent} userEvents={userContext.userEvents}/>
           </Grid>
         ))}
