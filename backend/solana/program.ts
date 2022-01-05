@@ -6,7 +6,6 @@ import {
 } from '@solana/web3.js';
 import {Provider, Wallet, Program, Idl} from '@project-serum/anchor';
 import idl from '../idl.json';
-import {getAdminCreateUpdateKeyPairFromDb} from './solana';
 
 const programID = new PublicKey(idl.metadata.address);
 
@@ -40,8 +39,7 @@ const registerUserBetOnEventAccount = async (
   return true;
 };
 
-const fetchEvent = async (eventId: string, db: any) => {
-  const wallet = await getAdminCreateUpdateKeyPairFromDb(db);
+const fetchEvent = async (eventId: string, wallet: Wallet) => {
   const provider = await getProvider(wallet);
   const program = new Program(idl as Idl, programID, provider);
   try {

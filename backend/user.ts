@@ -5,8 +5,6 @@ import {
   registerUserBetOnEventAccount,
 } from './solana/program';
 import {
-  getAdminCreateUpdateKeyPairFromDb,
-  getVaultKeyPairFromDb,
   transferSolToAccount,
 } from './solana/solana';
 import {
@@ -14,6 +12,11 @@ import {
   PublicKey,
   Keypair,
 } from '@solana/web3.js';
+import {Wallet} from '@project-serum/anchor';
+import {
+  getAdminCreateUpdateKeyPairFromDb,
+  getVaultKeyPairFromDb,
+} from './wallet_utils';
 
 const usersDb = process.env.USERS_DB;
 
@@ -139,7 +142,8 @@ class UserApis {
       res.status(500).send('You have already redeemed');
       return;
     }
-    const eventAccount: any = await fetchEvent(req.body.eventId, this.db);
+    const wallet: Wallet = await getAdminCreateUpdateKeyPairFromDb(this.db);
+    const eventAccount: any = await fetchEvent(req.body.eventId, wallet);
     if (
       eventAccount.state != 3 ||
       eventAccount.correctOptionNumber > 4 ||

@@ -13,6 +13,7 @@ import {
 } from 'firebase-admin/firestore';
 import serviceAccount from '../strut-336918-eeb8eca850d9.json';
 import UserApis from './user';
+import EventApis from './events';
 
 initializeApp({
   credential: cert(serviceAccount as ServiceAccount),
@@ -27,36 +28,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 const db = getFirestore();
-const eventsDb = db.collection(process.env.EVENTS_DB);
 
-app.post('/api/events/create', async (req, res) => {
-  if (!req.body.eventAccountPublicKeyBase58) {
-    res.status(500).send('event account\'s public key is undefined');
-  } else {
-    await eventsDb.doc(req.body.eventAccountPublicKeyBase58).set(req.body);
-    res.json({message: 'success'});
-  }
-});
-
-app.post('/api/events/update', async (req, res) => {
-  await eventsDb.doc(req.body.eventAccountPublicKeyBase58).set(req.body);
-  res.json({message: 'success'});
-});
-
-app.get('/api/events', async (req, res) => {
-  const snapshot = await eventsDb.get();
-  let events = snapshot.docs.map((doc, index) => {
-    return {
-      id: doc.id,
-      ...doc.data(),
-    };
-  });
-  // Remove empty doc (if any).
-  // Atleast one doc is required for a collection.
-  events = events.filter((x)=>'eventAuthorityPublicKeyBase58' in x);
-
-  res.json(events);
-});
+/* Event APIs */
+const eventApis = new EventApis(db);
+app.post('/api/events', eventApis.getEvents.bind(eventApis));
+app.post('/api/events/update', eventApis.updateEvent.bind(eventApis));
+app.post('/api/events/create', eventApis.createEvent.bind(eventApis));
 
 /* User APIs */
 const userApis = new UserApis(db);
