@@ -1,5 +1,15 @@
 runtime: nodejs
 env: flex
 
+skip_files:
+- ^target.*
+- ^test-ledger.*
+- ^frontend/node_modules.*
+- ^frontend/test-ledger.*
+- ^node_modules.*
+
+manual_scaling:
+  instances: 1
+
 env_variables:
-  NODE_ENV: 'devnet'
+  NODE_ENV: 'production'
