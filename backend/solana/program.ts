@@ -6,12 +6,13 @@ import {
 } from '@solana/web3.js';
 import {Provider, Wallet, Program, Idl} from '@project-serum/anchor';
 import idl from '../idl.json';
+import {NETWORK_CONFIG} from '../config';
 
 const programID = new PublicKey(idl.metadata.address);
 
 async function getProvider(wallet: Wallet) {
   /* Create the provider and return it to the caller */
-  const connection = new Connection(process.env.BLOCKCHAIN_URL, 'confirmed');
+  const connection = new Connection(NETWORK_CONFIG.BLOCKCHAIN_URL, 'confirmed');
 
   const provider = new Provider(
       connection,

@@ -3,8 +3,9 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint --fix \"./tests/**/*.{js,jsx,ts,tsx,json}\"",
         "server": "nodemon backend/index.ts",
-        "client": "REACT_APP_BLOCKCHAIN_URL=http://localhost:8899 yarn --cwd frontend/ start",
-        "dev": "NODE_ENV=localnet concurrently \"npm run server\" \"npm run client\""
+        "client": "yarn --cwd frontend/ start",
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "start": "PORT=8080 NODE_ENV=production npm run server"
     },
     "dependencies": {
         "@project-serum/anchor": "^0.15.0",

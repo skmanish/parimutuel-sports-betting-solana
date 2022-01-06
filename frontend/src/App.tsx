@@ -15,13 +15,14 @@ import {ThemeProvider} from '@mui/material/styles';
 import theme from './theme';
 import {UserContextProvider} from './context/user-context';
 import UserHomePage from './pages/user-home';
+import {BLOCKCHAIN_URL} from './utils/config';
 
 const wallets = [getPhantomWallet()];
 
 const AppWithProvider = () => (
   <ThemeProvider theme={theme}>
     <ConnectionProvider
-      endpoint={process.env.REACT_APP_BLOCKCHAIN_URL as string}>
+      endpoint={BLOCKCHAIN_URL}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <UserContextProvider>

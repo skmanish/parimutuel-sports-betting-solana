@@ -4,8 +4,9 @@ import {
   PublicKey,
 } from '@solana/web3.js';
 import bs58 from 'bs58';
+import {NETWORK_CONFIG} from './config';
 
-const walletsDb = process.env.WALLETS_DB;
+const walletsDb = NETWORK_CONFIG.WALLETS_DB;
 
 const getAdminCreateUpdateKeyPairFromDb = async (db) => {
   const keypair = await db.collection(walletsDb).doc(

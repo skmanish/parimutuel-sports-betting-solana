@@ -9,6 +9,7 @@ import {
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
+import {BLOCKCHAIN_URL} from './config';
 
 const opts = {
   preflightCommitment: 'confirmed',
@@ -16,7 +17,7 @@ const opts = {
 
 async function getProvider(wallet: Wallet) {
   /* Create the provider and return it to the caller */
-  const network: string = process.env.REACT_APP_BLOCKCHAIN_URL as string;
+  const network: string = BLOCKCHAIN_URL;
   const connection = new Connection(
       network,
       opts.preflightCommitment as Commitment);

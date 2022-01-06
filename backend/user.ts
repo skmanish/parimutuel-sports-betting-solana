@@ -17,8 +17,9 @@ import {
   getAdminCreateUpdateKeyPairFromDb,
   getVaultKeyPairFromDb,
 } from './wallet_utils';
+import {NETWORK_CONFIG} from './config';
 
-const usersDb = process.env.USERS_DB;
+const usersDb = NETWORK_CONFIG.USERS_DB;
 
 class UserApis {
   db: any;
@@ -169,16 +170,20 @@ class UserApis {
         userWinningsInSol*LAMPORTS_PER_SOL,
     );
     // Step 3: Store in the DB that SOL has been redeemed.
-    const allParticipatedEvents = participatedEvents.data().events;
-    allParticipatedEvents[eventIds.indexOf(req.body.eventId)] = {
-      ...userEvent,
-      winningsSolCents: userWinningsInSol*100,
-      winningsSignature: txSignature,
-    };
-    await this.db.collection(usersDb).doc(req.body.publicKeyInBase58).set(
-        {'events': allParticipatedEvents});
-    res.status(200).send(userWinningsInSol+'');
-    return;
+    // TODO: check transaction signature.
+    if (txSignature) {
+      const allParticipatedEvents = participatedEvents.data().events;
+      allParticipatedEvents[eventIds.indexOf(req.body.eventId)] = {
+        ...userEvent,
+        winningsSolCents: userWinningsInSol*100,
+        winningsSignature: txSignature,
+      };
+      await this.db.collection(usersDb).doc(req.body.publicKeyInBase58).set(
+          {'events': allParticipatedEvents});
+      res.status(200).send(userWinningsInSol+'');
+    } else {
+      res.status(500).send('Invalid transaction signature');
+    }
   }
 };
 export default UserApis;

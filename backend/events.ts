@@ -1,11 +1,14 @@
+import {NETWORK_CONFIG} from './config';
+
 /* eslint-disable require-jsdoc */
-const eventsDb = process.env.EVENTS_DB;
+const eventsDb = NETWORK_CONFIG.EVENTS_DB;
 
 class EventApis {
     db: any;
     constructor(firestoreDatabase) {
       this.db = firestoreDatabase;
     }
+
     // GET /api/events
     // Expected input {publicKeyInBase58: x, eventId: string}
     async getEvents(req, res) {
