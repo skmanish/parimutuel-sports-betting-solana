@@ -14,6 +14,7 @@ import {
 import {WalletConnection} from '../components/connection';
 import EventsGrid from './events-grid';
 import AirdropButton from '../components/button-airdrop';
+import ButtonStackSocial from '../components/buttons-stack-social';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -89,6 +90,7 @@ export default function UserHomePage() {
           <Tab label="My Events" {...a11yProps(4)} />
         </Tabs>
         <Box sx={{flexGrow: 1}}/>
+        <ButtonStackSocial />
         <Typography
           color='primary'
           sx={{mb: 3}}
