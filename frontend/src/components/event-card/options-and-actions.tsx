@@ -18,6 +18,7 @@ import {eventsApi} from '../../api/eventsApi';
 import {useContext, useState} from 'react';
 import {UserEvent} from '../../types/user';
 import {UserContext} from '../../context/user-context';
+import {ToastContext} from '../../context/toast-context';
 
 export default function EventCardOptionsAndActions(
     props: {event: EventMetadata, userEvents: UserEvent[]},
@@ -25,6 +26,8 @@ export default function EventCardOptionsAndActions(
   const wallet = useWallet();
   // TODO: Keep either userContext or userEvents.
   const userContext = useContext(UserContext);
+  const {successMessage, failureMessage} = useContext(ToastContext);
+
   const [event, setEvent] = useState<EventMetadata>(props.event);
   const validOptionsText: string[] = getValidOptions(event);
   const validOptionsPercentageStakes: number[
@@ -44,16 +47,18 @@ export default function EventCardOptionsAndActions(
 
   const placeBet = async (chosenOption: number) => {
     if (!wallet.publicKey) {
-      console.log('Please connect to wallet');
+      failureMessage('Please connect to wallet');
       return;
     }
     // @ts-ignore
     const apiResponse = await userApi.placeBet(event, wallet,
         5e8, chosenOption);
     if (apiResponse && apiResponse.success) {
+      successMessage('Successfully placed bet');
       // @ts-ignore
       const updatedEvent = await eventsApi.updateEvent(event, wallet);
       if (updatedEvent) setEvent(updatedEvent);
+      userContext.updateUserEvents();
     }
   };
 
@@ -63,7 +68,7 @@ export default function EventCardOptionsAndActions(
         userContext.userPublicKeyBase58,
         event.eventAccountPublicKeyBase58 as string,
         event.eventVaultPubkey as string, (response: any) => {
-          alert('Total winnings: ' + response.data as string);
+          successMessage('Total winnings: ' + response.data as string);
         });
     userContext.updateUserEvents();
     setRedeeming(false);

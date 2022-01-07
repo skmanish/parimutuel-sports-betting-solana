@@ -16,6 +16,7 @@ import theme from './theme';
 import {UserContextProvider} from './context/user-context';
 import UserHomePage from './pages/user-home';
 import {BLOCKCHAIN_URL} from './utils/config';
+import {ToastContextProvider} from './context/toast-context';
 
 const wallets = [getPhantomWallet()];
 
@@ -25,14 +26,16 @@ const AppWithProvider = () => (
       endpoint={BLOCKCHAIN_URL}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
-          <UserContextProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<UserHomePage />} />
-                <Route path="/admin" element={<AdminPanelPage />} />
-              </Routes>
-            </BrowserRouter>
-          </UserContextProvider>
+          <ToastContextProvider>
+            <UserContextProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<UserHomePage />} />
+                  <Route path="/admin" element={<AdminPanelPage />} />
+                </Routes>
+              </BrowserRouter>
+            </UserContextProvider>
+          </ToastContextProvider>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
