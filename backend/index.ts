@@ -15,6 +15,7 @@ import serviceAccount from '../strut-336918-eeb8eca850d9.json';
 import UserApis from './user';
 import EventApis from './events';
 import {NETWORK_CONFIG} from './config';
+// import {inspectTransaction} from './solana/solana';
 
 initializeApp({
   credential: cert(serviceAccount as ServiceAccount),
@@ -49,7 +50,8 @@ if (process.env.NODE_ENV == 'production') {
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
   });
 }
-
+// eslint-disable-next-line max-len
+// inspectTransaction('4C9Ukc3UXkDMJhES18CzfQEDiJNAQPRPqeomW5yVL2gKaj7saXyeFBjsxNEmLJTL1MpACbvb1akQaxrbTg33bE4M');
 console.log('BLOCKCHAIN_URL', NETWORK_CONFIG.BLOCKCHAIN_URL);
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

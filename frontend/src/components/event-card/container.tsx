@@ -37,7 +37,7 @@ export default function EventCard(props: {
     myUseEffect();
   }, []);
   return (
-    <Card sx={{backgroundColor: '#00122e'}}>
+    <Card sx={{backgroundColor: '#00122e', borderRadius: 3}}>
       <CardActionArea>
         <CardMedia
           component="img"

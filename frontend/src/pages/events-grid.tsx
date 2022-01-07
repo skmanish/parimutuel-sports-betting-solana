@@ -33,10 +33,10 @@ export default function EventsGrid(
         columnSpacing={2}
         direction="row"
         alignItems="flex-start"
-        justifyContent="space-evenly"
+        justifyContent="flex-start"
       >
         {events.map((mEvent, mIndex) => (
-          <Grid item key={mIndex} xs={9} sm={5} md={4}>
+          <Grid item key={mIndex} xs={9} sm={8} md={4}>
             <EventCard inputEvent={mEvent} userEvents={userContext.userEvents}/>
           </Grid>
         ))}
