@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import {WalletConnection} from '../components/connection';
 import EventsGrid from './events-grid';
+import AirdropButton from '../components/button-airdrop';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -99,6 +100,7 @@ export default function UserHomePage() {
           display='flex'
           flexDirection='row-reverse'>
           <WalletConnection />
+          <AirdropButton />
         </Box>
         <Paper sx={{
           flexGrow: 1,

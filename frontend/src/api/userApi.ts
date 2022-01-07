@@ -22,7 +22,7 @@ class userApi {
           return {error: 'Already participated'};
         }
       }
-      return {success: true};
+      return {success: 'true'} as ApiResponse;
     }
 
     static myBetInAnEvent(
@@ -63,7 +63,8 @@ class userApi {
         return {error: 'Insufficient funds in wallet!'} as ApiResponse;
       } else if (txSignature == '') {
         return {
-          error: 'Sending lamports failed. Signature is empty'} as ApiResponse;
+          error: 'Sending lamports failed. Signature is empty',
+        } as ApiResponse;
       } else {
         return await axios.post(
             '/api/user/placebet',
@@ -75,7 +76,7 @@ class userApi {
               userSolCents: (lamports*100)/LAMPORTS_PER_SOL,
             },
         ).then((response) => {
-          return {success: true} as ApiResponse;
+          return {success: 'true'} as ApiResponse;
         }).catch((error) => {
           return {error: error} as ApiResponse;
         });

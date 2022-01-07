@@ -5,10 +5,12 @@ import {
   Commitment,
   ConfirmOptions,
   Connection,
+  LAMPORTS_PER_SOL,
   PublicKey,
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
+import {ApiResponse} from '../types/api-response';
 import {BLOCKCHAIN_URL} from './config';
 
 const opts = {
@@ -28,6 +30,24 @@ async function getProvider(wallet: Wallet) {
       opts.preflightCommitment as ConfirmOptions,
   );
   return provider;
+}
+
+async function requestAirdrop(wallet: Wallet) {
+  if (!wallet.publicKey) {
+    return {error: 'Please connect a wallet first'} as ApiResponse;
+  }
+  const provider = await getProvider(wallet);
+  try {
+    return {
+      success: await provider.connection.requestAirdrop(
+          wallet.publicKey,
+          5*LAMPORTS_PER_SOL),
+    } as ApiResponse;
+  } catch (error) {
+    return {
+      error: error,
+    } as ApiResponse;
+  }
 }
 
 async function sendLamports(
@@ -61,4 +81,4 @@ const getBalanceSafe = async (provider: Provider) => {
   return 0;
 };
 
-export {getProvider, sendLamports};
+export {getProvider, sendLamports, requestAirdrop};

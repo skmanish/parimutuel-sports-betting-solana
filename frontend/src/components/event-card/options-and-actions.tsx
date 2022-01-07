@@ -59,6 +59,8 @@ export default function EventCardOptionsAndActions(
       const updatedEvent = await eventsApi.updateEvent(event, wallet);
       if (updatedEvent) setEvent(updatedEvent);
       userContext.updateUserEvents();
+    } else if (apiResponse.error) {
+      failureMessage(apiResponse.error);
     }
   };
 
