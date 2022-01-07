@@ -35,6 +35,8 @@ async function sendLamports(
     destinationPublicKey: PublicKey,
     lamports: number) {
   const provider = await getProvider(wallet);
+  const walletBalance = await getBalanceSafe(provider);
+  if (await walletBalance <= lamports) return -1;
   const transaction = new Transaction().add(
       SystemProgram.transfer({
         fromPubkey: wallet.publicKey,
@@ -46,5 +48,17 @@ async function sendLamports(
   const transactionSignature = await provider.send(transaction);
   return transactionSignature;
 }
+
+const getBalanceSafe = async (provider: Provider) => {
+  // If account has no transaction on blockchain, then getBalance throws.
+  try {
+    return await provider.connection.getBalance(
+        provider.wallet.publicKey);
+  } catch (error) {
+    console.log(error);
+    return 0;
+  }
+  return 0;
+};
 
 export {getProvider, sendLamports};

@@ -59,7 +59,9 @@ class userApi {
           wallet,
           new PublicKey(event.eventVaultPubkey),
           lamports);
-      if (txSignature == '') {
+      if (txSignature == -1) {
+        return {error: 'Insufficient funds in wallet!'} as ApiResponse;
+      } else if (txSignature == '') {
         return {
           error: 'Sending lamports failed. Signature is empty'} as ApiResponse;
       } else {
