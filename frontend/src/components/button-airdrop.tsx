@@ -15,7 +15,7 @@ export default function AirdropButton() {
     // @ts-ignore
     const apiResponse = await requestAirdrop(wallet);
     if (apiResponse.error) failureMessage(apiResponse.error);
-    else successMessage('Successfully airdropped 5 SOL into your account');
+    else successMessage('Successfully airdropped 2 SOL into your account');
   };
 
   return (

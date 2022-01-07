@@ -18,7 +18,7 @@ const LOCALNET_NETWORK_CONFIG = {
 };
 
 // Ensure this value is correctly set before running a gcloud deploy!
-const NETWORK_CONFIG = LOCALNET_NETWORK_CONFIG;
+const NETWORK_CONFIG = DEVENET_NETWORK_CONFIG;
 
 export {
   NETWORK_CONFIG,

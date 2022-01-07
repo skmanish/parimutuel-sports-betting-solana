@@ -41,7 +41,7 @@ async function requestAirdrop(wallet: Wallet) {
     return {
       success: await provider.connection.requestAirdrop(
           wallet.publicKey,
-          5*LAMPORTS_PER_SOL),
+          2*LAMPORTS_PER_SOL),
     } as ApiResponse;
   } catch (error) {
     return {
