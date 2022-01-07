@@ -63,7 +63,7 @@ class userApi {
         return {
           error: 'Sending lamports failed. Signature is empty'} as ApiResponse;
       } else {
-        await axios.post(
+        return await axios.post(
             '/api/user/placebet',
             {
               publicKeyInBase58: wallet.publicKey.toBase58(),
