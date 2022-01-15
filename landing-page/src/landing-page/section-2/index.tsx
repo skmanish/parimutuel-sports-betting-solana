@@ -27,8 +27,8 @@ export default function Section2() {
     return (
         <Box 
             sx={{backgroundColor: '#002255'}} 
-            px={{xs: 2, md: 10}}
-            py={{xs: 2, md: 5}}
+            px={{xs: 3, sm: 5, md: 12, lg: 15, xl: 18}}
+            py={{xs: 5}}
             display='flex'
             flexDirection='column'
             textAlign='center'
@@ -39,7 +39,7 @@ export default function Section2() {
                     fontSize: bigScreen?'40px':'1.6rem', 
                     lineHeight: bigScreen?'48px':'1.75rem',
                     color: 'white',
-                    margin: 2,
+                    marginBottom: 1,
                 }}>{titleText}</Box>
             </Typography>
             {bigScreen &&
