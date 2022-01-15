@@ -1,8 +1,13 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/styles';
+import React from 'react';
+import Slide from '@mui/material/Slide';
 import Section1Intro from './section-1-intro';
 import Section1Navbar from './section-1-navbar';
+import Section1SlidingPhoneAndShadow from './section-1-sliding-phone-and-shadow';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const ColorGradientBox = styled(Box)({
     background: 'linear-gradient(57.03deg, #002255 -5.48%, #0E90A9 144.23%)',
@@ -16,6 +21,9 @@ const ColorGradientBox = styled(Box)({
   });
 
 export default function Section1() {
+    const theme = useTheme();
+    const bigScreen = useMediaQuery(theme.breakpoints.up('sm'));
+    const containerRef = React.useRef(null);
     return(
     <ColorGradientBox>
     <img 
@@ -30,19 +38,47 @@ export default function Section1() {
         left: '0px',
     }} 
     alt='stadium'/>
-    <Stack px={18} py={3} sx={{display: 'flex', height: '100%'}}>
+    <Stack 
+        px={{xs: 3, sm: 5, md: 12, lg: 15, xl: 18}} 
+        py={3} 
+        sx={{display: 'flex', height: '100%'}} 
+        ref={containerRef}
+    >
         <Section1Navbar />
-        <Box sx={{flexGrow: 1, display: 'flex'}}>
-            <Box sx={{width: '55%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                <Section1Intro />
+        {bigScreen &&
+            <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'row'}}>
+                <Box sx={{width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <Section1Intro />
+                </Box>
+                <Box sx={{
+                    width: '50%', 
+                    display: 'flex', 
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end', 
+                    m: 'auto',
+                    flexDirection: 'column'
+                }}>
+                    <Section1SlidingPhoneAndShadow containerRef={containerRef}/>
+                </Box>
             </Box>
-            <Box sx={{width: '45%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', m: 'auto'}}>
-                <img
-                src={process.env.PUBLIC_URL + 'images/section_1_app_mockup.png'}
-                style={{height: '60vh', width: 'auto'}}
-                alt='Swoop_app'/>
+        }
+        {!bigScreen &&
+            <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', pt: 2}}>
+                <Box sx={{
+                    height: '60%', 
+                    display: 'flex', 
+                    justifyContent: 'flex-end',
+                    alignItems: 'center', 
+                    m: 'auto',
+                    flexDirection: 'column'
+                }}>
+                    <Section1SlidingPhoneAndShadow containerRef={containerRef}/>
+                </Box>
+                <Box sx={{height: '40%', display: 'flex'}}>
+                    <Section1Intro />
+                </Box>
             </Box>
-        </Box>
+        }
     </Stack>
     </ColorGradientBox>
     );

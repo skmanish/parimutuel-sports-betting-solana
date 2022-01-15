@@ -8,4 +8,4 @@ This is a web3 based app which allows users to stake SOL to participate in event
 ## How to run
 1. yarn install (in frontend root)
 2. yarn start (in frontend root)
-3. Open localhost:8000
+3. Open localhost:3000

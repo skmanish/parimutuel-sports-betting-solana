@@ -2,20 +2,63 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { styled, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+const TitleBox = styled(Box)({
+    fontWeight: 700, 
+    fontSize: '56px', 
+    lineHeight: '67.77px'
+});
+const TitleBoxPhone = styled(Box)({
+    fontWeight: 700, 
+    fontSize: '1.6rem', 
+    lineHeight: '1.75rem',
+    textAlign: 'center'
+});
+const DescriptionBox = styled(Box)({
+    fontWeight: 400, 
+    fontSize: '22px', 
+    lineHeight: '33px'
+});
+const DescriptionBoxPhone = styled(Box)({
+    fontWeight: 400, 
+    fontSize: '1.0rem', 
+    lineHeight: '1.3rem',
+    textAlign: 'center'
+});
+const LaunchingIPLBox = styled(Box)({
+    fontWeight: 400, 
+    fontSize: '18px', 
+    lineHeight: '25px'
+});
+const LaunchingIPLBoxPhone = styled(Box)({
+    fontWeight: 400, 
+    fontSize: '1.0rem', 
+    lineHeight: '25px'
+});
 
 export default function Section1Intro() {
+    const theme = useTheme();
+    const bigScreen = useMediaQuery(theme.breakpoints.up('sm'));
+    const titleText = 'Fantasy Cricket On Web 3.0';
+    const descriptionText = "The world's first scalable and decentralized "+
+        "platform for fantasy cricket.";
+    const launchingIPLText = 'Launching in IPL 2022';
+    const itemsAlignment = bigScreen? 'flex-start': 'center';
     return(
-    <Stack>
+    <Box sx={{display: 'flex', alignItems: itemsAlignment}}>
     <Typography variant="h2" >
-        <Box sx={{ fontWeight: 700, fontSize: '56px', lineHeight: '67.77px' }}>
-            Fantasy Cricket On Web3.0 
-        </Box>
+        {bigScreen?
+            <TitleBox> {titleText} </TitleBox>:
+            <TitleBoxPhone> {titleText} </TitleBoxPhone>
+        }
     </Typography>
     <Typography variant='h5' sx={{mt: 2}}>
-        <Box sx={{ fontWeight: 400, fontSize: '22px', lineHeight: '33px' }}>
-            The world's first scalable and decentralized platform for fantasy
-             cricket powered by Solana and Serum.
-        </Box>    
+        {bigScreen?
+            <DescriptionBox> {descriptionText} </DescriptionBox>:
+            <DescriptionBoxPhone> {descriptionText} </DescriptionBoxPhone>
+        }
     </Typography>
     <Box sx={{mt: 3, flexDirection: 'row', alignItems: 'center'}}>
         <img 
@@ -28,14 +71,15 @@ export default function Section1Intro() {
             alt='Solana'
             style={{width: 'auto', height: '25px', marginLeft: '10px'}} 
         />
-        <Typography variant='h6' sx={{px: 3}}>
-            <Box sx={{ fontWeight: 400, fontSize: '18px', lineHeight: '25px' }}>
-                Launching in IPL 2022
-            </Box>
+        <Typography variant='h6' pl={{xs: 2, md: 2}}>
+            {bigScreen?
+                <LaunchingIPLBox> {launchingIPLText} </LaunchingIPLBox>:
+                <LaunchingIPLBoxPhone> {launchingIPLText} </LaunchingIPLBoxPhone>
+            }
         </Typography>
     </Box>
     <Button variant="outlined" sx={{mt: 3, maxWidth: '150px'}} size='small'>
         Sign up for Beta
     </Button>
-    </Stack>);
+    </Box>);
 }
