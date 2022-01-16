@@ -10,7 +10,8 @@ export default function Section5(){
         <Box 
             sx={{backgroundColor: '#021F49'}} 
             px={{xs: 3, sm: 5, md: 12, lg: 15, xl: 18}}
-            py={5}
+            pt={5}
+            pb={2}
             display='flex'
             flexDirection='column'
             justifyContent='space-between'
@@ -25,10 +26,10 @@ export default function Section5(){
             </Grid>
             <Box sx={{
                 fontWeight: 400, 
-                fontSize: '1rem', 
-                lineHeight: '1.5rem', 
+                fontSize: '0.9rem', 
+                lineHeight: '1.2rem', 
                 textAlign: 'center',
-                color: '#E3E3E3',
+                color: '#E3E3E3AA',
                 margin: 1,
                 marginTop: 2,
             }}>

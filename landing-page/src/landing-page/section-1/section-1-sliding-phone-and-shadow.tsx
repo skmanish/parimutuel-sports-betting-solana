@@ -26,7 +26,7 @@ export default function Section1SlidingPhoneAndShadow(
         setPhoneAnimationState(true);
     }, []);
     return (
-        <Slide direction="up" in={phoneAnimationState} container={containerRef.current}>
+        <Slide direction="up" in={phoneAnimationState} container={containerRef.current} timeout={800}>
             <Box sx={{display: 'flex', flexDirection: 'column-reverse', alignItems: 'flex-end'}}>
             <OvalShadowBox sx={{width: '100%', height: ovalShadowHeight, mt: ovalShadowOffset}}/>
             <img

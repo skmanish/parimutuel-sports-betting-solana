@@ -53,13 +53,13 @@ export default function Section4() {
                 <Section4GridItem quarter={quarters[0]} targets={targets[0]}/>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-                <Section4GridItem quarter={quarters[1]} targets={targets[1]} isCurrent={true}/>
+                <Section4GridItem quarter={quarters[1]} targets={targets[1]} isCurrent/>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-                <Section4GridItem quarter={quarters[2]} targets={targets[2]}/>
+                <Section4GridItem quarter={quarters[2]} targets={targets[2]} isFuture/>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-                <Section4GridItem quarter={quarters[3]} targets={targets[3]}/>
+                <Section4GridItem quarter={quarters[3]} targets={targets[3]} isFuture/>
             </Grid>
             </Grid>
         </Box>

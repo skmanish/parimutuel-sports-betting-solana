@@ -5,6 +5,8 @@ import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Divider from '@mui/material/Divider';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ContainerBox = styled(Box)({
     backgroundColor: '#FFFFFF20',
@@ -42,12 +44,13 @@ const QuarterTitleBoxPhone = styled(Box)({
 const QuarterTargetBox = styled(Box)({
     fontWeight: 300, 
     fontSize: '0.8rem', 
-    lineHeight: '1.8rem',
+    lineHeight: '1.375rem',
     color: '#FFFFFF',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'left',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    textAlign: 'left',
 });
 const QuarterTargetBoxPhone = styled(Box)({
     fontWeight: 300, 
@@ -57,13 +60,25 @@ const QuarterTargetBoxPhone = styled(Box)({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'left',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    textAlign: 'left',
 });
+
+const getIcon = (isCurrent?: boolean, isFuture?: boolean) => {
+    if (isCurrent) {
+        return(<CircularProgress size='1rem' sx={{mr: 2}}/>);
+    } else if (isFuture) {
+        return(<CheckBoxOutlineBlankIcon fontSize='small' sx={{mr: 1}}/>);
+    } else {
+        return(<CheckBoxIcon sx={{mr: 1}}/>);
+    }
+}
 
 export default function Section4GridItem(props: {
     quarter: string,
     targets: string[],
     isCurrent?: boolean,
+    isFuture?: boolean,
 }) {
     const theme = useTheme();
     const bigScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -80,22 +95,24 @@ export default function Section4GridItem(props: {
                 </QuarterTitleBoxPhone>
             }
             <Divider light sx={{m: 1}} />
+            <Box p={1}>
             {props.targets.map((target)=>{
                 return (
                     <>
                     {bigScreen?
                         <QuarterTargetBox>
-                            <CheckBoxIcon sx={{pr: 1}}/>
+                            {getIcon(props.isCurrent, props.isFuture)}
                             {target}
                         </QuarterTargetBox>:
                         <QuarterTargetBoxPhone>
-                            <CheckBoxIcon sx={{pr: 1}}/>
+                            {getIcon(props.isCurrent, props.isFuture)}
                             {target}
                         </QuarterTargetBoxPhone>
                     }
                     </>
                 );
             })}
+            </Box>
         </ContainerBox>
     );
 }
