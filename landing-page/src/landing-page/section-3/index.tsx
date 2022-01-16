@@ -5,8 +5,8 @@ import Section3Points from './section-3-points';
 
 const TitleBox = styled(Box)({
     fontWeight: 700, 
-    fontSize: '56px', 
-    lineHeight: '67.77px',
+    fontSize: '40px', 
+    lineHeight: '48px',
     color: '#FFFFFF',
     textAlign: 'left',
 });
