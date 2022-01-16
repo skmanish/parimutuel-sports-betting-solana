@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
@@ -31,8 +30,8 @@ export default function Section2VerticalTile(
             src={props.imageUrl} 
             alt={props.title}
             style={{width: '100%', height: 'auto'}} />
-            <Typography><TitleBox>{props.title}</TitleBox></Typography>
-            <Typography><DescriptionBox>{props.description}</DescriptionBox></Typography>
+            <TitleBox>{props.title}</TitleBox>
+            <DescriptionBox>{props.description}</DescriptionBox>
         </Box>
     );
 };

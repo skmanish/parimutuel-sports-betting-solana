@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
-import { styled, useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Section2HorizontalTile from './section-2-horizontal-tile';
 import Section2VerticalTile from './section-2-vertical-tile';
@@ -33,15 +32,13 @@ export default function Section2() {
             flexDirection='column'
             textAlign='center'
         >
-            <Typography>
-                <Box sx={{
-                    fontWeight: 700, 
-                    fontSize: bigScreen?'40px':'1.6rem', 
-                    lineHeight: bigScreen?'48px':'1.75rem',
-                    color: 'white',
-                    marginBottom: 1,
-                }}>{titleText}</Box>
-            </Typography>
+            <Box sx={{
+                fontWeight: 700, 
+                fontSize: bigScreen?'40px':'1.6rem', 
+                lineHeight: bigScreen?'48px':'1.75rem',
+                color: 'white',
+                marginBottom: 1,
+            }}>{titleText}</Box>
             {bigScreen &&
                 <Box display='flex' flexDirection='row'>
                     <Section2VerticalTile 

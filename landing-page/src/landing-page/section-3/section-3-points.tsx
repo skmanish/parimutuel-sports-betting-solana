@@ -1,5 +1,4 @@
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import Stack from '@mui/material/Stack';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -38,7 +37,7 @@ export default function Section3Points() {
         >
             {points.map((point, index) => {
                 return (
-                    <Box display='flex' flexDirection='row' alignItems='center' py={1} >
+                    <Box key={index} display='flex' flexDirection='row' alignItems='center' py={1} >
                         <ArrowRightIcon color='primary' fontSize='large'/>
                         {bigScreen?
                             <DescriptionBox>{point}</DescriptionBox>:

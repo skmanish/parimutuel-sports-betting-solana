@@ -1,4 +1,3 @@
-import Paper from "@mui/material/Paper";
 import Box from '@mui/material/Box';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { styled, useTheme } from "@mui/material/styles";
@@ -96,9 +95,9 @@ export default function Section4GridItem(props: {
             }
             <Divider light sx={{m: 1}} />
             <Box p={1}>
-            {props.targets.map((target)=>{
+            {props.targets.map((target, index)=>{
                 return (
-                    <>
+                    <Box key={index}>
                     {bigScreen?
                         <QuarterTargetBox>
                             {getIcon(props.isCurrent, props.isFuture)}
@@ -109,7 +108,7 @@ export default function Section4GridItem(props: {
                             {target}
                         </QuarterTargetBoxPhone>
                     }
-                    </>
+                    </Box>
                 );
             })}
             </Box>

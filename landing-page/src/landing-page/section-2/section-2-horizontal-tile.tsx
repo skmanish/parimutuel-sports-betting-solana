@@ -1,4 +1,4 @@
-import { Typography, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
@@ -30,8 +30,8 @@ export default function Section2HorizontalTile(
     return(
         <Box py={{xs: 2, md: 5}} px={{xs: 2, md: 4}} display='flex' flexDirection='row'>
             <Stack sx={{width: '60%'}}>
-                <Typography><TitleBox>{props.title}</TitleBox></Typography>
-                <Typography><DescriptionBox>{props.description}</DescriptionBox></Typography>
+                <TitleBox>{props.title}</TitleBox>
+                <DescriptionBox>{props.description}</DescriptionBox>
             </Stack>
             <img 
             src={props.imageUrl} 
