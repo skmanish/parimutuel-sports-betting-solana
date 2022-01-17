@@ -24,7 +24,8 @@ export default function Section3Points() {
     const points = [
         'No registration or disclosure of personal info. Solana wallet is only requirement.',
         'Competitive Fee Structure - Swoop fees <1%',
-        'Trustless & transparent - Oracle driven resolutions;teams, winners and prizes fully auditable',
+        'Trustless & transparent - Oracle driven resolutions',
+        'Teams, winners and prizes fully auditable',
         'No lock up periods',
     ];
     return(
@@ -37,8 +38,8 @@ export default function Section3Points() {
         >
             {points.map((point, index) => {
                 return (
-                    <Box key={index} display='flex' flexDirection='row' alignItems='center' py={1} >
-                        <ArrowRightIcon color='primary' fontSize='large'/>
+                    <Box key={index} display='flex' flexDirection='row' alignItems='flex-start' py={1} >
+                        <ArrowRightIcon color='primary' fontSize='medium'/>
                         {bigScreen?
                             <DescriptionBox>{point}</DescriptionBox>:
                             <DescriptionBoxPhone>{point}</DescriptionBoxPhone>

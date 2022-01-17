@@ -1,9 +1,7 @@
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Section5GetInTouch from './section-5-get-in-touch';
 import Section5Subscribe from './section-5-subscribe';
 import Grid from '@mui/material/Grid';
-import { Typography } from '@mui/material';
 
 export default function Section5(){
     return(
@@ -17,10 +15,10 @@ export default function Section5(){
             justifyContent='space-between'
         >
             <Grid container spacing={2} justifyContent="space-between" alignItems="stretch">
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                     <Section5Subscribe />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                     <Section5GetInTouch />
                 </Grid>
             </Grid>

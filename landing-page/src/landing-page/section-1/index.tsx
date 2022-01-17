@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/styles';
 import React from 'react';
-import Slide from '@mui/material/Slide';
 import Section1Intro from './section-1-intro';
 import Section1Navbar from './section-1-navbar';
 import Section1SlidingPhoneAndShadow from './section-1-sliding-phone-and-shadow';
@@ -10,7 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 const ColorGradientBox = styled(Box)({
-    background: 'linear-gradient(57.03deg, #002255 -5.48%, #0E90A9 144.23%)',
+    background: 'linear-gradient(255.48deg, #0E90A9 11.59%, #002255 93.73%);',
     border: 0,
     color: 'white',
     height: '100vh',
@@ -65,7 +64,7 @@ export default function Section1() {
         {!bigScreen &&
             <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', pt: 2}}>
                 <Box sx={{
-                    height: '60%', 
+                    height: '55%', 
                     display: 'flex', 
                     justifyContent: 'flex-end',
                     alignItems: 'center', 
@@ -74,7 +73,7 @@ export default function Section1() {
                 }}>
                     <Section1SlidingPhoneAndShadow containerRef={containerRef}/>
                 </Box>
-                <Box sx={{height: '40%', display: 'flex'}}>
+                <Box sx={{height: '45%', display: 'flex'}}>
                     <Section1Intro />
                 </Box>
             </Box>

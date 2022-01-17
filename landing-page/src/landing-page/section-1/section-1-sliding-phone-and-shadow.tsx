@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Slide from '@mui/material/Slide';
 import { styled } from '@mui/material/styles';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -18,8 +18,8 @@ export default function Section1SlidingPhoneAndShadow(
     const theme = useTheme();
     const bigScreen = useMediaQuery(theme.breakpoints.up('sm'));
     const phoneHeight = bigScreen? '60vh': '40vh';
-    const ovalShadowOffset = '-20vh';
-    const ovalShadowHeight = bigScreen? '200px': '200px';
+    const ovalShadowOffset = '-10vh';
+    const ovalShadowHeight = bigScreen? '100px': '100px';
 
     React.useEffect(() => {
         // Update the document title using the browser API
