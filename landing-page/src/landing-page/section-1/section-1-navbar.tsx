@@ -10,8 +10,17 @@ const ButtonContainer = styled(Button)({
     color: 'white',
     fontWeight: 500, 
     fontSize: '16px', 
-    lineHeight: '19px'
+    lineHeight: '19px',
 });
+
+const NavbuttonsTypography = styled(Typography)({
+    fontWeight: 500,
+    fontSize: '17px',
+    lineHeight: '19px',
+    textTransform: 'none',
+    color: '#ffffff',
+    minWidth: '0px',
+})
 
 export default function Section1Navbar() {
     const theme = useTheme();
@@ -30,16 +39,16 @@ export default function Section1Navbar() {
             {bigScreen &&
                 <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <ButtonContainer>
-                        <Typography variant='body2'>About Us</Typography>
+                        <NavbuttonsTypography>About Us</NavbuttonsTypography>
                     </ButtonContainer>
                     <ButtonContainer>
-                        <Typography variant='body2'>How to play</Typography>
+                        <NavbuttonsTypography>How to play</NavbuttonsTypography>
                     </ButtonContainer>
                     <ButtonContainer>
-                        <Typography variant='body2'>FAQs</Typography>
+                        <NavbuttonsTypography>FAQs</NavbuttonsTypography>
                     </ButtonContainer>
-                    <Button variant="outlined" sx={{ml: 1, maxWidth: '150px'}} size='small'>
-                        Devnet MVP
+                    <Button variant="outlined" sx={{ml: 1, maxWidth: '150px'}} size='medium'>
+                        <NavbuttonsTypography>Devnet MVP</NavbuttonsTypography>
                     </Button>
                 </Box>
             }

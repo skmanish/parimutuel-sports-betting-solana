@@ -41,8 +41,8 @@ const QuarterTitleBoxPhone = styled(Box)({
     alignItems: 'center',
 });
 const QuarterTargetBox = styled(Box)({
-    fontWeight: 300, 
-    fontSize: '0.8rem', 
+    fontWeight: 400, 
+    fontSize: '1.0rem', 
     lineHeight: '1.375rem',
     color: '#FFFFFF',
     display: 'flex',
@@ -52,8 +52,8 @@ const QuarterTargetBox = styled(Box)({
     textAlign: 'left',
 });
 const QuarterTargetBoxPhone = styled(Box)({
-    fontWeight: 300, 
-    fontSize: '0.8rem', 
+    fontWeight: 400, 
+    fontSize: '1.0rem', 
     lineHeight: '1.375rem',
     color: '#FFFFFF',
     display: 'flex',

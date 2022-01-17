@@ -8,7 +8,7 @@ export default function Section5(){
         <Box 
             sx={{backgroundColor: '#021F49'}} 
             px={{xs: 3, sm: 5, md: 12, lg: 15, xl: 18}}
-            pt={5}
+            pt={2}
             pb={2}
             display='flex'
             flexDirection='column'
@@ -18,9 +18,9 @@ export default function Section5(){
                 <Grid item xs={12}>
                     <Section5Subscribe />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <Section5GetInTouch />
-                </Grid>
+                </Grid> */}
             </Grid>
             <Box sx={{
                 fontWeight: 400, 

@@ -46,7 +46,7 @@ export default function Section1() {
         <Section1Navbar />
         {bigScreen &&
             <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'row'}}>
-                <Box sx={{width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Box sx={{width: '40%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Section1Intro />
                 </Box>
                 <Box sx={{
@@ -62,7 +62,7 @@ export default function Section1() {
             </Box>
         }
         {!bigScreen &&
-            <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', pt: 2}}>
+            <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 <Box sx={{
                     height: '55%', 
                     display: 'flex', 
@@ -73,7 +73,7 @@ export default function Section1() {
                 }}>
                     <Section1SlidingPhoneAndShadow containerRef={containerRef}/>
                 </Box>
-                <Box sx={{height: '45%', display: 'flex'}}>
+                <Box sx={{height: '45%', pt: 2, display: 'flex'}}>
                     <Section1Intro />
                 </Box>
             </Box>
