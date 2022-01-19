@@ -16,10 +16,10 @@ const TitleBox = styled(Box)({
 });
 const TitleBoxPhone = styled(Box)({
     fontWeight: 700, 
-    fontSize: '2.0rem', 
-    lineHeight: '2.3rem',
+    fontSize: '2.5rem', 
+    lineHeight: '3.0rem',
     textAlign: 'center',
-    textTransform: 'uppercase',
+    textTransform: 'none',
 });
 const DescriptionBox = styled(Box)({
     fontWeight: 400, 
@@ -68,10 +68,10 @@ export default function Section1Intro() {
     <Typography variant='h5' mt={{xs: 2, md: 4}}>
         {bigScreen?
             <DescriptionBox> {descriptionText} </DescriptionBox>:
-            <DescriptionBoxPhone> {descriptionText} </DescriptionBoxPhone>
+            <></>
         }
     </Typography>
-    <Box mt={{xs: 3, md: 7}} sx={{flexDirection: 'row', alignItems: 'center'}}>
+    <Box mt={{xs: 1, md: 7}} sx={{flexDirection: 'row', alignItems: 'center'}}>
         <img 
             src={process.env.PUBLIC_URL + 'images/solana_s_white.png'} 
             alt='Solana'
