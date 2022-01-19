@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {styled, useTheme} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import {useNavigate} from 'react-router-dom';
 
 const ButtonContainer = styled(Button)({
     textTransform: 'none',
@@ -25,6 +26,7 @@ const NavbuttonsTypography = styled(Typography)({
 export default function Section1Navbar() {
     const theme = useTheme();
     const bigScreen = useMediaQuery(theme.breakpoints.up('sm'));
+    const navigate = useNavigate();
     return (
         <Box sx={{
             display: 'flex', 
@@ -47,7 +49,18 @@ export default function Section1Navbar() {
                     <ButtonContainer>
                         <NavbuttonsTypography>FAQs</NavbuttonsTypography>
                     </ButtonContainer>
-                    <Button variant="outlined" sx={{ml: 1, maxWidth: '150px'}} size='medium'>
+                    <Button 
+                        variant="outlined" 
+                        sx={{ml: 1}} 
+                        size='large'
+                        onClick={() => {
+                            window.location.href = (
+                                window.location.href[window.location.href.length - 1] == '/'?
+                                window.location.href + 'bet':
+                                window.location.href + '/bet'
+                            );
+                        }}
+                    >
                         <NavbuttonsTypography>Devnet MVP</NavbuttonsTypography>
                     </Button>
                 </Box>

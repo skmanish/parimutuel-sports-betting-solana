@@ -7,9 +7,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 const TitleBox = styled(Box)({
     fontWeight: 700, 
-    fontSize: '56px', 
-    lineHeight: '65px',
-    textTransform: 'uppercase',
+    fontSize: '85px', 
+    lineHeight: '95px',
+    textTransform: 'none',
+    letterSpacing: '3px',
 });
 const TitleBoxPhone = styled(Box)({
     fontWeight: 700, 
@@ -33,15 +34,16 @@ const DescriptionBoxPhone = styled(Box)({
 });
 const LaunchingIPLBox = styled(Box)({
     fontWeight: 400, 
-    fontSize: '20px', 
+    fontSize: '24px', 
     lineHeight: '20px',
-    letterSpacing: '1px',
+    letterSpacing: '0px',
+    color: '#E3E3E3',
 });
 const LaunchingIPLBoxPhone = styled(Box)({
     fontWeight: 700, 
     fontSize: '1.0rem', 
     lineHeight: '20px',
-    letterSpacing: '1px',
+    letterSpacing: '0px',
 });
 
 export default function Section1Intro() {

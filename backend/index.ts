@@ -45,9 +45,13 @@ app.post('/api/user/placebet', userApis.placeBet.bind(userApis));
 app.post('/api/user/redeembet', userApis.redeemBet.bind(userApis));
 
 if (process.env.NODE_ENV == 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-  app.get('/*', function(req, res) {
+  app.use(express.static(path.join(__dirname, '../landing-page/build')));
+  app.use('/bet', express.static(path.join(__dirname, '../frontend/build')));
+  app.get('/bet/*', function(req, res) {
     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+  });
+  app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../landing-page/build', 'index.html'));
   });
 }
 // eslint-disable-next-line max-len

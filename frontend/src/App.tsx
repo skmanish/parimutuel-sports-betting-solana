@@ -20,6 +20,7 @@ import {ToastContextProvider} from './context/toast-context';
 
 const wallets = [getPhantomWallet()];
 
+
 const AppWithProvider = () => (
   <ThemeProvider theme={theme}>
     <ConnectionProvider
@@ -30,8 +31,8 @@ const AppWithProvider = () => (
             <UserContextProvider>
               <BrowserRouter>
                 <Routes>
-                  <Route path="/" element={<UserHomePage />} />
-                  <Route path="/admin" element={<AdminPanelPage />} />
+                  <Route path="/bet/admin" element={<AdminPanelPage />} />
+                  <Route path="/bet" element={<UserHomePage />} />
                 </Routes>
               </BrowserRouter>
             </UserContextProvider>

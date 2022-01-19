@@ -55,7 +55,6 @@ export default function UserHomePage() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
   return (
     <Box
       sx={{

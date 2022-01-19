@@ -45,17 +45,21 @@ export default function Section1() {
     >
         <Section1Navbar />
         {bigScreen &&
-            <Box sx={{flexGrow: 1, display: 'flex', flexDirection: 'row'}}>
-                <Box sx={{width: '40%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Box sx={{
+                flexGrow: 1, 
+                display: 'flex',  
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+            }}>
+                <Box sx={{width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Section1Intro />
                 </Box>
                 <Box sx={{
                     width: '50%', 
                     display: 'flex', 
                     justifyContent: 'flex-end',
-                    alignItems: 'flex-end', 
-                    m: 'auto',
-                    flexDirection: 'column'
+                    alignItems: 'center', 
+                    flexDirection: 'row'
                 }}>
                     <Section1SlidingPhoneAndShadow containerRef={containerRef}/>
                 </Box>

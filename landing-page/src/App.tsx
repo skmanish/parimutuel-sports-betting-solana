@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import LandingPage from './landing-page';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import NotFoundPage from './NotFoundPage';
 
 const theme = createTheme({
   typography: {
@@ -29,7 +31,12 @@ function App() {
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
-        <LandingPage />
+        <BrowserRouter>
+          <Routes>
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/" element={<LandingPage />} />
+          </Routes>
+        </BrowserRouter>
       </ThemeProvider>
     </React.StrictMode>
   );
