@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {styled, useTheme} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Logo from './logo';
 
 const ButtonContainer = styled(Button)({
     textTransform: 'none',
@@ -46,10 +47,7 @@ export default function Section1Navbar() {
             justifyContent: 'space-between',
             alignItems: 'center'
         }}>
-            <img 
-              src={process.env.PUBLIC_URL + 'images/logo_light_400.png'} 
-              alt='swoop_logo'
-              style={{width: '150px'}} />
+            <Logo />
             {bigScreen &&
                 <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <ButtonContainer onClick={()=>scrollToSection(2)}>

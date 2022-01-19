@@ -6,7 +6,6 @@ import {
   Paper,
   Typography,
   Stack,
-  IconButton,
   Tab,
   Tabs,
   Divider,
@@ -15,6 +14,7 @@ import {WalletConnection} from '../components/connection';
 import EventsGrid from './events-grid';
 import AirdropButton from '../components/button-airdrop';
 import ButtonStackSocial from '../components/buttons-stack-social';
+import Logo from '../components/logo';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -65,12 +65,7 @@ export default function UserHomePage() {
         width: '100vw'}}
     >
       <Stack sx={{display: 'flex'}}>
-        <IconButton
-          aria-label="fingerprint"
-          color="success"
-          sx={{mt: 2, mb: 4}}>
-          <img src='/images/swager-logo-dark.svg' width='140px'/>
-        </IconButton>
+        <Logo />
         <Tabs
           orientation="vertical"
           variant="scrollable"
@@ -93,7 +88,7 @@ export default function UserHomePage() {
         <Typography
           color='primary'
           sx={{mb: 3}}
-          align='center'>Ⓒ Swager</Typography>
+          align='center'>Ⓒ Swoop</Typography>
       </Stack>
       <Stack sx={{flexGrow: 1}}>
         <Box
