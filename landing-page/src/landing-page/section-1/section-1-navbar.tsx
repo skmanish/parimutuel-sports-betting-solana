@@ -1,10 +1,8 @@
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {styled, useTheme} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import {useNavigate} from 'react-router-dom';
 
 const ButtonContainer = styled(Button)({
     textTransform: 'none',
@@ -15,7 +13,7 @@ const ButtonContainer = styled(Button)({
 });
 
 const NavbuttonsTypography = styled(Typography)({
-    fontWeight: 500,
+    fontWeight: 400,
     fontSize: '17px',
     lineHeight: '19px',
     textTransform: 'none',
@@ -26,7 +24,21 @@ const NavbuttonsTypography = styled(Typography)({
 export default function Section1Navbar() {
     const theme = useTheme();
     const bigScreen = useMediaQuery(theme.breakpoints.up('sm'));
-    const navigate = useNavigate();
+    const scrollToSection = (sectionNumber: number) => {
+        const totalHeight = document.body.offsetHeight;
+        const viewportHeight = Math.max(
+            document.documentElement.clientHeight || 0, window.innerHeight || 0)
+        if (sectionNumber === 1) {
+            window.scrollTo(
+                { top: viewportHeight, behavior: 'smooth' })
+        } else if (sectionNumber === 2) {
+            window.scrollTo(
+                { top: (totalHeight)/2, behavior: 'smooth' })
+        } else {
+            window.scrollTo(
+                { top: totalHeight, behavior: 'smooth' })
+        }
+    }
     return (
         <Box sx={{
             display: 'flex', 
@@ -40,14 +52,14 @@ export default function Section1Navbar() {
               style={{width: '150px'}} />
             {bigScreen &&
                 <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <ButtonContainer>
+                    <ButtonContainer onClick={()=>scrollToSection(2)}>
                         <NavbuttonsTypography>About Us</NavbuttonsTypography>
                     </ButtonContainer>
-                    <ButtonContainer>
+                    <ButtonContainer onClick={()=>scrollToSection(1)}>
                         <NavbuttonsTypography>How to play</NavbuttonsTypography>
                     </ButtonContainer>
-                    <ButtonContainer>
-                        <NavbuttonsTypography>FAQs</NavbuttonsTypography>
+                    <ButtonContainer onClick={()=>scrollToSection(3)}>
+                        <NavbuttonsTypography>Roadmap</NavbuttonsTypography>
                     </ButtonContainer>
                     <Button 
                         variant="outlined" 
@@ -55,7 +67,7 @@ export default function Section1Navbar() {
                         size='large'
                         onClick={() => {
                             window.location.href = (
-                                window.location.href[window.location.href.length - 1] == '/'?
+                                window.location.href[window.location.href.length - 1] === '/'?
                                 window.location.href + 'bet':
                                 window.location.href + '/bet'
                             );

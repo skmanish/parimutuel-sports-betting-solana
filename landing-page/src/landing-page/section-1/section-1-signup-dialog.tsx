@@ -1,10 +1,8 @@
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Box from '@mui/material/Box';
 import { signUpForBeta } from "../../api";
@@ -12,9 +10,6 @@ import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const StyledDialog = styled(Dialog)({
-    // backgroundColor: '#ffffff',
-});
 
 export default function Section1SignupDialog(props: {
     open: boolean,
@@ -83,7 +78,6 @@ export default function Section1SignupDialog(props: {
             <>
                 <TextField
                     autoFocus
-                    id="name"
                     size='small'
                     sx={{flexGrow: 1}}
                     value={email}
