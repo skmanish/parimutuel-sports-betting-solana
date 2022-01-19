@@ -44,6 +44,14 @@ app.get('/api/user/event', userApis.myBetInThisEvent.bind(userApis));
 app.post('/api/user/placebet', userApis.placeBet.bind(userApis));
 app.post('/api/user/redeembet', userApis.redeemBet.bind(userApis));
 
+/* Sign-Up For Beta */
+app.post('/api/signupbeta', async (req, res) => {
+  await db.collection('beta-sign-up').doc(req.body.email).set({
+    'latest': new Date(),
+  });
+  res.status(200).send('success');
+});
+
 if (process.env.NODE_ENV == 'production') {
   app.use(express.static(path.join(__dirname, '../landing-page/build')));
   app.use('/bet', express.static(path.join(__dirname, '../frontend/build')));

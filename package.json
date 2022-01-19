@@ -5,6 +5,8 @@
         "server": "nodemon backend/index.ts",
         "client": "yarn --cwd frontend/ start",
         "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "landing-page-ui": "yarn --cwd landing-page/ start",
+        "dev-landing-page": "concurrently \"npm run server\" \"npm run landing-page-ui\"",
         "start": "PORT=8080 NODE_ENV=production npm run server"
     },
     "dependencies": {
