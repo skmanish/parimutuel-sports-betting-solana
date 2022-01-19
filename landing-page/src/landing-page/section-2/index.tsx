@@ -19,9 +19,9 @@ export default function Section2() {
         'Join Contests',
     ];
     const descriptions = [
-        'Choose an upcoming match that you want to play',
+        'Choose an upcoming IPL match to participate',
         'Use your skills to pick the right players',
-        'Choose between different contests and win money',
+        'Choose between different contests and swoop your winnings in crypto',
     ];
     return (
         <Box 

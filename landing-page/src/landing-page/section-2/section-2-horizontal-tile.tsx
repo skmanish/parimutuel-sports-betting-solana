@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 
 const TitleBox = styled(Box)({
     fontWeight: 700, 
-    fontSize: '18px', 
-    lineHeight: '24px',
+    fontSize: '1.5rem', 
+    lineHeight: '1.375rem',
     color: '#FFFFFF',
     textAlign: 'left',
     marginTop: '5px',
@@ -14,8 +14,8 @@ const TitleBox = styled(Box)({
 
 const DescriptionBox = styled(Box)({
     fontWeight: 400, 
-    fontSize: '12px', 
-    lineHeight: '18px',
+    fontSize: '1.0rem', 
+    lineHeight: '1.375rem',
     color: '#E3E3E3',
     textAlign: 'left',
     marginTop: '5px',

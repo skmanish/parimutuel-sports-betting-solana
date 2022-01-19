@@ -3,8 +3,8 @@ import { styled } from '@mui/material/styles';
 
 const TitleBox = styled(Box)({
     fontWeight: 700, 
-    fontSize: '24px', 
-    lineHeight: '30px',
+    fontSize: '1.8rem', 
+    lineHeight: '1.375rem',
     color: '#FFFFFF',
     textAlign: 'left',
     marginTop: '20px',
@@ -12,8 +12,8 @@ const TitleBox = styled(Box)({
 
 const DescriptionBox = styled(Box)({
     fontWeight: 400, 
-    fontSize: '16px', 
-    lineHeight: '24px',
+    fontSize: '1.1rem', 
+    lineHeight: '1.375rem',
     color: '#E3E3E3',
     textAlign: 'left',
     marginTop: '20px',
@@ -25,7 +25,7 @@ export default function Section2VerticalTile(
     description: string}) 
 {
     return(
-        <Box py={{xs: 3, md: 5}} px={{xs: 2, md: 4}}>
+        <Box py={{xs: 3, md: 5}} px={{xs: 2, md: 4}} sx={{width: '33%'}}>
             <img 
             src={props.imageUrl} 
             alt={props.title}
