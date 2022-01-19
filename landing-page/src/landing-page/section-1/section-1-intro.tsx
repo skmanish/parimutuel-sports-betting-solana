@@ -4,6 +4,8 @@ import Box from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useState } from 'react';
+import Section1SignupDialog from './section-1-signup-dialog';
 
 const TitleBox = styled(Box)({
     fontWeight: 700, 
@@ -54,6 +56,7 @@ export default function Section1Intro() {
         "platform for fantasy cricket.";
     const launchingIPLText = 'Launching in IPL 2022';
     const itemsAlignment = bigScreen? 'flex-start': 'center';
+    const [signUpDialogOpen, setSignUpDialogOpen] = useState(false); 
     return(
     <Box sx={{display: 'flex', alignItems: itemsAlignment}}>
     <Typography variant="h2" >
@@ -91,8 +94,14 @@ export default function Section1Intro() {
             }
         </Typography>
     </Box>
-    <Button variant="outlined" sx={{mt: 3, maxWidth: '200px'}} size='large'>
+    <Button 
+        variant="outlined" 
+        sx={{mt: 3, maxWidth: '200px'}} 
+        size='large'
+        onClick={()=>setSignUpDialogOpen(true)}
+    >
         Sign up for Beta
     </Button>
+    <Section1SignupDialog open={signUpDialogOpen} setOpen={setSignUpDialogOpen}/>
     </Box>);
 }
