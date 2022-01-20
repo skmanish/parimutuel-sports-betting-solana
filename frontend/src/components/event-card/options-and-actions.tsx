@@ -6,7 +6,6 @@ import {
 } from '../../utils/event-utils';
 import {
   Typography,
-  Divider,
   Stack,
   Button,
   Box,
@@ -98,27 +97,43 @@ export default function EventCardOptionsAndActions(
     setRedeeming(false);
   };
   return (
-    <Stack spacing={1} sx={{width: '100%', p: 1, color: '#002255'}}>
-      <Divider light style={{width: '100%'}}/>
-      {validOptionsText.map((option, index)=>(
-        <div key={index}>
-          <Stack
-            spacing={1}
-            direction='row'
-            sx={{display: 'flex', width: '100%'}}>
-            <Box
-              display='flex'
+    <Box display='flex' sx={{width: '100%'}}>
+      <Stack spacing={1}
+        sx={{p: 1, color: '#002255'}}
+        justifyContent='space-evenly'
+      >
+        {validOptionsText.map((option, index)=>(
+          <div key={index}>
+            <Stack
+              spacing={1}
+              direction='row'
+              sx={{display: 'flex', width: '100%'}}>
+              <Box
+                display='flex'
+                sx={{flexGrow: 1}}>
+                <Typography
+                  variant='body2'
+                  m='auto'
+                  color='#002255aa'>
+                  {option}
+                </Typography>
+              </Box>
+            </Stack>
+          </div>
+        ))}
+      </Stack>
+      <Stack spacing={1}
+        sx={{p: 1, color: '#002255', flexGrow: 1}}
+      >
+        {validOptionsText.map((option, index)=>(
+          <div key={index} style={{flexGrow: 1}}>
+            <Stack
+              spacing={1}
+              direction='row'
               sx={{flexGrow: 1}}>
-              <Typography
-                variant='body2'
-                m='auto'
-                color='#002255aa'>
-                {option}
-              </Typography>
-            </Box>
-            <LinearProgressWithLabel
-              value={validOptionsPercentageStakes[index]} />
-            {placingBet?
+              <LinearProgressWithLabel
+                value={validOptionsPercentageStakes[index]} />
+              {placingBet?
               <CircularProgress color='inherit'/>:
               <Button
                 variant="outlined"
@@ -128,16 +143,15 @@ export default function EventCardOptionsAndActions(
                   placeBet(index);
                 }}
                 disabled={'error' in bettable}
-                sx={{fontSize: '10px', width: '50%'}}>
+                sx={{fontSize: '10px', width: '100px'}}>
                 {getButtonTextBasedOnIndex(index)}
               </Button>
-            }
-          </Stack>
-          <Divider style={{width: '100%'}}/>
-        </div>
-      ))}
-      {
-        (event.eventState == 3) && (chosenOption > -1) &&
+              }
+            </Stack>
+          </div>
+        ))}
+        {
+          (event.eventState == 3) && (chosenOption > -1) &&
         ((winningsSolCents == -1) ?
           <Button
             variant="contained"
@@ -169,8 +183,9 @@ export default function EventCardOptionsAndActions(
             </>)}
           </Box>
         )
-      }
-    </Stack>
+        }
+      </Stack>
+    </Box>
   );
 };
 

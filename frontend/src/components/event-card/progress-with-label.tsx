@@ -12,13 +12,13 @@ export default function LinearProgressWithLabel(
   return (
     <Stack
       direction='row'
-      sx={{width: '100%'}}
+      sx={{flexGrow: 1}}
       spacing={0}
       alignItems='center'>
       <Box sx={{flexGrow: 8}}>
         <LinearProgress color='inherit' variant="determinate" {...props} />
       </Box>
-      <Box sx={{flexGrow: 1}}>
+      <Box sx={{width: '5ch'}}>
         <Typography
           variant="body2"
           color="#002255aa"

@@ -22,7 +22,7 @@ export default function StartEndResolveTime(props: {
 }) {
   const event = props.inputEvent;
   const amOrPm = (time: Date) => {
-    return (new Date(time)).getHours() >= 12? 'AM': 'PM';
+    return (new Date(time)).getHours() >= 12? 'PM': 'AM';
   };
   const getTimeString = (time: Date) => {
     const months = [
@@ -34,7 +34,7 @@ export default function StartEndResolveTime(props: {
     const minutes = (new Date(time)).getMinutes();
     const minutesString = minutes < 10? '0'+minutes: minutes;
     return (
-      (new Date(time)).getDay() + ' ' +
+      (new Date(time)).getDate() + ' ' +
       months[(new Date(time)).getMonth()] + ', ' +
       hourString + ':' + minutesString + ' ' + amOrPm(time));
   };

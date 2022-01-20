@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {
+  Box,
   CardActionArea,
   CardActions,
 } from '@mui/material';
@@ -68,7 +69,6 @@ export default function EventCard(props: {
       </CardActionArea>
       <CardContent sx={{p: 2, pb: 0, display: 'flex', flexGrow: 1, flexDirection: 'column'}}>
         <Typography
-          gutterBottom
           variant="h5"
           component="div"
           color="#002255"
@@ -76,14 +76,13 @@ export default function EventCard(props: {
         >
           {event.eventTitle}
         </Typography>
-        <Typography
-          variant="body1"
+        <StartEndResolveTime inputEvent={event}/>
+        <Box
           color="#4d6488"
-          sx={{flexGrow: 1}}
+          sx={{flexGrow: 1, mt: 1, fontWeight: 400}}
         >
           {event.eventQuestion}
-        </Typography>
-        <StartEndResolveTime inputEvent={event}/>
+        </Box>
       </CardContent>
       <CardActions>
         <EventCardOptionsAndActions event={event} userEvents={userEvents}/>
