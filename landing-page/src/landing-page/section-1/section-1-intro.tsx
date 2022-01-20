@@ -9,7 +9,7 @@ import Section1SignupDialog from './section-1-signup-dialog';
 
 const TitleBox = styled(Box)({
     fontWeight: 700, 
-    fontSize: '85px', 
+    fontSize: '80px', 
     lineHeight: '95px',
     textTransform: 'none',
     letterSpacing: '3px',
@@ -71,7 +71,7 @@ export default function Section1Intro() {
             <></>
         }
     </Typography>
-    <Box mt={{xs: 1, md: 7}} sx={{flexDirection: 'row', alignItems: 'center'}}>
+    <Box mt={{xs: 1, md: 4}} sx={{flexDirection: 'row', alignItems: 'center'}}>
         <img 
             src={process.env.PUBLIC_URL + 'images/solana_s_white.png'} 
             alt='Solana'

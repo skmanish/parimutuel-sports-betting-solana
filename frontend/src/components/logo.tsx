@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 export default function Logo() {
   return (
     <Box
-      sx={{height: '13vh', p: 2}}
+      sx={{height: '10vh', p: 2}}
       display='flex'
       justifyContent='center'
       alignItems='center'

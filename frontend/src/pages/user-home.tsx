@@ -92,7 +92,7 @@ export default function UserHomePage() {
       </Stack>
       <Stack sx={{flexGrow: 1}}>
         <Box
-          sx={{height: '13vh', alignItems: 'center', pr: 4}}
+          sx={{height: '10vh', alignItems: 'center', pr: 4}}
           display='flex'
           flexDirection='row-reverse'>
           <WalletConnection />
@@ -100,10 +100,10 @@ export default function UserHomePage() {
         </Box>
         <Paper sx={{
           flexGrow: 1,
-          background: 'linear-gradient(to bottom right, #334e77 , #b3bdcc)',
+          background: 'linear-gradient(to bottom right, #334e77 , #5ce1e6)',
           height: '87vh',
           overflow: 'auto',
-          borderRadius: 5,
+          borderTopLeftRadius: 15,
         }} elevation={3} >
           <TabPanel value={value} index={0}>
             <EventsGrid type='active'/>
