@@ -3,20 +3,6 @@ env: standard
 
 instance_class: F2
 
-# skip_files cannot be used with the [nodejs16] runtime.
-# Ignore patterns are instead expressed in a .gcloudignore file.
-
-# skip_files:
-# - ^target.*
-# - ^test-ledger.*
-# - ^frontend/node_modules.*
-# - ^landing-page/node_modules.*
-# - ^frontend/test-ledger.*
-# - ^node_modules.*
-
-manual_scaling:
-  instances: 1
-
 env_variables:
   NODE_ENV: 'production'
 
