@@ -29,8 +29,8 @@ export default function EventsGrid(
     <>
       <Grid
         container
-        rowSpacing={3}
-        columnSpacing={3}
+        rowSpacing={5}
+        columnSpacing={5}
         direction="row"
         alignItems="stretch"
         justifyContent="flex-start"
