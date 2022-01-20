@@ -16,12 +16,12 @@ export default function LinearProgressWithLabel(
       spacing={0}
       alignItems='center'>
       <Box sx={{flexGrow: 8}}>
-        <LinearProgress variant="determinate" {...props} />
+        <LinearProgress color='inherit' variant="determinate" {...props} />
       </Box>
       <Box sx={{flexGrow: 1}}>
         <Typography
           variant="body2"
-          color="text.secondary"
+          color="#002255aa"
           align='center'>
           {`${Math.round(props.value)}%`}
         </Typography>

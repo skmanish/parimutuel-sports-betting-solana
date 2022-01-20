@@ -1,0 +1,37 @@
+.custom-shape-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 0.2px);
+    height: 30px;
+}
+
+.custom-shape-divider .shape-fill {
+    fill: #e6e9ee;
+}
+.blinking-dot {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: 700;
+    color: white; 
+    font-size: 16px;
+    padding: 5px;
+    animation: blink 1s linear infinite;
+    border-radius: 10%;
+    background-color: #4d6488;
+}
+@keyframes blink{
+    0%{opacity: 0;}
+    50%{opacity: .5;}
+    100%{opacity: 1;}
+}

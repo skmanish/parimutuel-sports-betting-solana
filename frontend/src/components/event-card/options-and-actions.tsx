@@ -19,6 +19,11 @@ import {useContext, useState} from 'react';
 import {UserEvent} from '../../types/user';
 import {UserContext} from '../../context/user-context';
 import {ToastContext} from '../../context/toast-context';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CircularProgress from '@mui/material/CircularProgress';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+// eslint-disable-next-line max-len
+import SentimentDissatisfiedRounded from '@mui/icons-material/SentimentDissatisfiedRounded';
 
 export default function EventCardOptionsAndActions(
     props: {event: EventMetadata, userEvents: UserEvent[]},
@@ -38,11 +43,26 @@ export default function EventCardOptionsAndActions(
     chosenSolCents,
     winningsSolCents] = userApi.myBetInAnEvent(event, props.userEvents);
   const [redeeming, setRedeeming] = useState(false);
+  const [placingBet, setPlacingBet] = useState(false);
 
   const getButtonTextBasedOnIndex = (index: number) => {
     if (chosenSolCents == -1) return 'Bet 0.5 SOL';
-    if (chosenOption == index) return 'Staked 0.5 SOL';
-    return 'No stakes';
+    if (chosenOption == index) {
+      return (
+        <>
+          <CheckCircleIcon sx={{mr: 1}}/> 0.5 SOL
+        </>
+      );
+    }
+    return '0 SOL';
+  };
+  const getRedeemButtonText = () => {
+    if (redeeming) return 'REDEEMING ..';
+    else if (winningsSolCents == 0) return 'You won 0 SOL';
+    else if (winningsSolCents > 0) {
+      return 'You won '+winningsSolCents/100+' SOL';
+    }
+    return 'REDEEM';
   };
 
   const placeBet = async (chosenOption: number) => {
@@ -50,9 +70,11 @@ export default function EventCardOptionsAndActions(
       failureMessage('Please connect to wallet');
       return;
     }
+    setPlacingBet(true);
     // @ts-ignore
     const apiResponse = await userApi.placeBet(event, wallet,
         5e8, chosenOption);
+    setPlacingBet(false);
     if (apiResponse && apiResponse.success) {
       successMessage('Successfully placed bet');
       // @ts-ignore
@@ -76,7 +98,7 @@ export default function EventCardOptionsAndActions(
     setRedeeming(false);
   };
   return (
-    <Stack spacing={1} sx={{width: '100%', p: 1}}>
+    <Stack spacing={1} sx={{width: '100%', p: 1, color: '#002255'}}>
       <Divider light style={{width: '100%'}}/>
       {validOptionsText.map((option, index)=>(
         <div key={index}>
@@ -90,38 +112,64 @@ export default function EventCardOptionsAndActions(
               <Typography
                 variant='body2'
                 m='auto'
-                color='text.secondary'>
+                color='#002255aa'>
                 {option}
               </Typography>
             </Box>
             <LinearProgressWithLabel
               value={validOptionsPercentageStakes[index]} />
-            <Button
-              variant="outlined"
-              size='small'
-              color="error"
-              onClick={() => {
-                placeBet(index);
-              }}
-              disabled={'error' in bettable}
-              sx={{fontSize: '10px', width: '50%'}}>
-              {getButtonTextBasedOnIndex(index)}
-            </Button>
+            {placingBet?
+              <CircularProgress color='inherit'/>:
+              <Button
+                variant="outlined"
+                size='small'
+                color="inherit"
+                onClick={() => {
+                  placeBet(index);
+                }}
+                disabled={'error' in bettable}
+                sx={{fontSize: '10px', width: '50%'}}>
+                {getButtonTextBasedOnIndex(index)}
+              </Button>
+            }
           </Stack>
-          <Divider light style={{width: '100%'}}/>
+          <Divider style={{width: '100%'}}/>
         </div>
       ))}
       {
-        (event.eventState == 3) &&
-      (chosenOption > -1) &&
-      (winningsSolCents == -1) && (
+        (event.eventState == 3) && (chosenOption > -1) &&
+        ((winningsSolCents == -1) ?
           <Button
             variant="contained"
+            color="secondary"
             onClick={redeemWinnings}
-            disabled={redeeming}>
-          Redeem
-          </Button>
-        )}
+            disabled={redeeming || winningsSolCents!=-1}>
+            {getRedeemButtonText()}
+          </Button> :
+          <Box sx={{
+            fontWeight: 700,
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '1rem',
+            paddingTop: 1,
+            textTransform: 'uppercase',
+            color: '#334e77',
+          }}>
+            {winningsSolCents > 0?
+            (<>
+              <EmojiEmotionsIcon sx={{px: 2}} />
+              {'You swooped '+Math.floor(winningsSolCents)/100+' SOL!'}
+              <EmojiEmotionsIcon sx={{px: 2}}/>
+            </>):
+            (<>
+              <SentimentDissatisfiedRounded sx={{px: 2}} />
+              {'You won '+Math.floor(winningsSolCents)/100+' SOL!'}
+              <SentimentDissatisfiedRounded sx={{px: 2}}/>
+            </>)}
+          </Box>
+        )
+      }
     </Stack>
   );
 };

@@ -100,7 +100,7 @@ export default function UserHomePage() {
         </Box>
         <Paper sx={{
           flexGrow: 1,
-          backgroundColor: '#e4fafb',
+          background: 'linear-gradient(to bottom right, #334e77 , #b3bdcc)',
           height: '87vh',
           overflow: 'auto',
           borderRadius: 5,

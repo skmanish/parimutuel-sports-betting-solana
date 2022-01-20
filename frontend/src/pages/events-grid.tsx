@@ -29,14 +29,16 @@ export default function EventsGrid(
     <>
       <Grid
         container
-        rowSpacing={2}
-        columnSpacing={2}
+        rowSpacing={3}
+        columnSpacing={3}
         direction="row"
-        alignItems="flex-start"
+        alignItems="stretch"
         justifyContent="flex-start"
       >
         {events.map((mEvent, mIndex) => (
-          <Grid item key={mIndex} xs={9} sm={8} md={4}>
+          <Grid item key={mIndex} xs={12} sm={12} md={6} lg={4}
+            sx={{display: 'flex', flexDirection: 'column', flexGrow: 1}}
+          >
             <EventCard inputEvent={mEvent} userEvents={userContext.userEvents}/>
           </Grid>
         ))}
